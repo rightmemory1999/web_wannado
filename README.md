@@ -1,6 +1,8 @@
 # Spring boot shopping mall project
 
-Spring boot 2.7.1, Gradle
+Spring boot 2.7.1
+
+Gradle
 
 ## 1. 상품 엔티티 설계
 상품코드
