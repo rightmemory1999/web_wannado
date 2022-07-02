@@ -1,5 +1,7 @@
 # Spring boot shopping mall project
 
+IntelliJ
+
 Spring boot 2.7.1
 
 Gradle
