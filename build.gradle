@@ -27,6 +27,9 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	/* querydsl gradle 빌드시 필요한 dependencies + annotationProcessor */
 	implementation 'com.querydsl:querydsl-jpa'
