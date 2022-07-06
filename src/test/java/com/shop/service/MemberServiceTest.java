@@ -34,7 +34,7 @@ class MemberServiceTest {
     @DisplayName("회원가입 테스트")
     public void saveMemberTest() {
         Member member = createMember();
-        Member savedMember = memberService.saveMember(member);
+        Member savedMember = memberService.joinMember(member);
 
         assertEquals(member.getName(), savedMember.getName());
         assertEquals(member.getEmail(), savedMember.getEmail());
@@ -48,9 +48,9 @@ class MemberServiceTest {
     public void saveDuplicateMemberTest() {
         Member member1 = new Member();
         Member member2 = new Member();
-        memberService.saveMember(member1);
+        memberService.joinMember(member1);
 
-        Throwable e = assertThrows(IllegalStateException.class, () -> memberService.saveMember(member2));
+        Throwable e = assertThrows(IllegalStateException.class, () -> memberService.joinMember(member2));
 
         assertEquals("이미 가입된 회원입니다.", e.getMessage());
     }

@@ -36,7 +36,7 @@ class MemberControllerTest {
         memberFormDto.setAddress("부산시 해운대구");
         memberFormDto.setPassword(password);
         Member member = Member.createMember(memberFormDto, passwordEncoder);
-        return memberService.saveMember(member);
+        return memberService.joinMember(member);
     }
 
     @Test
