@@ -6,49 +6,5 @@
             2022 Wanna do Shopping mall
         </div>
     </footer>
-
-    <!-- Javascript vendors -->
-    <script th:src="@{/assets/vendors/jquery/jquery.min.js}"></script>
-    <script th:src="@{/assets/vendors/jquery-validation/jquery.validate.js}"></script>
-    <script th:src="@{/assets/vendors/bootstrap/js/bootstrap.bundle.min.js?cb=1609799846196}"></script>
-    <script th:src="@{/assets/vendors/bootstrap-select/js/bootstrap-select.min.js}"></script>
-    <script th:src="@{/assets/vendors/prismjs/prism.js}"></script>
-    <script th:src="@{/assets/vendors/cocoen/js/cocoen.min.js}"></script>
-    <script th:src="@{/assets/vendors/swiper/js/swiper.min.js}"></script>
-    <script th:src="@{/assets/vendors/object-fit-images/ofi.min.js}"></script>
-    <script th:src="@{/assets/vendors/aos/aos.js}"></script>
-    <script th:src="@{/assets/vendors/zebra_pin/zebra_pin.min.js}"></script>
-    <script th:src="@{/assets/vendors/magnific-popup/jquery.magnific-popup.min.js}"></script>
-    <script th:src="@{/assets/vendors/leaflet/leaflet.js}"></script>
-    <!-- Javascript File -->
-    <script th:src="@{/assets/js/theme.js?cb=1609799846196}"></script>
-
-    <script>
-        // validate
-        $(document).ready(function () {
-            $("#subscribeForm").validate();
-        });
-
-        // product swiper
-        var productSwiper = new Swiper('.swiper-container.product-swiper', {
-            loop: false,
-            spaceBetween: 0,
-            slidesPerView: 'auto',
-            centeredSlides: false,
-            pagination: {
-                el: '.swiper-pagination',
-            },
-
-            breakpoints: {
-                576: {
-                    initialSlide: 1,
-                    centeredSlides: true,
-                },
-                992: {
-                    centeredSlides: false,
-                },
-            }
-        });
-    </script>
 </div>
 </html>
