@@ -31,6 +31,6 @@ public class ItemImg extends BaseEntity {
     public void updateItemImg(String oriImgName, String imgName, String imgUrl) {
         this.oriImgName = oriImgName;
         this.imgName = imgName;
-        this. imgUrl = imgUrl;
+        this.imgUrl = imgUrl;
     }
 }
