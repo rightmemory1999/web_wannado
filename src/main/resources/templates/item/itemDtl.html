@@ -140,7 +140,9 @@
 
 <div layout:fragment="content">
 
+    <!-- 제품아이디, 제품가격 가져오기 -->
     <input type="hidden" id="itemId" th:value="${item.id}">
+    <input type="hidden" th:value="${item.price}" id="price" name="price">
 
     <!-- start section -->
     <section class="bg-light overflow-hidden">
@@ -192,12 +194,13 @@
                                     <h5 class="font-weight-normal mb-0">FREE 2-Day Shipping</h5>
                                 </li><!-- end list-group-item -->
 
+                                <!-- 주문 수량 -->
                                 <li class="list-group-item border-bottom-0 py-25px">
                                     <div class="row">
                                         <div class="col">
                                             <div class="qty-container">
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" name="count" id="count" value="1">
+                                                    <input type="text" class="form-control" name="count" value="1" min="1">
                                                     <div class="input-group-append">
                                                         <button class="qty" type="button" data-func="plus" data-field="count"><i class="flaticon-play-button"></i></button>
                                                         <button class="qty" type="button" data-func="minus" data-field="count"><i class="flaticon-play-button-1"></i></button>
@@ -226,17 +229,17 @@
                             <!-- 장바구니, 주문하기 버튼 -->
                             <div th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}" class="row py-10px px-3 bg-white fixed-bottom">
                                 <div class="col-12 col-sm-6 mb-10px mb-md-0">
-                                    <button type="button" class="btn btn-minimalis-outline-dark btn-block" onclick="addCart()">장바구니 담기</button>
+                                    <button type="button" class="btn btn-minimalis-outline-dark btn-block borderRound" onclick="addCart()">장바구니 담기</button>
                                 </div><!-- end col -->
                                 <div class="col-12 col-sm-6">
-                                    <button type="button" class="btn btn-minimalis-dark btn-block" onclick="order()">주문하기</button>
+                                    <button type="button" class="btn btn-minimalis-dark btn-block borderRound" onclick="order()">주문하기</button>
                                 </div><!-- end col -->
                             </div><!-- end row -->
 
                             <!-- 품절 버튼 -->
                             <div th:unless="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}" class="row py-10px px-3 bg-white fixed-bottom">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-minimalis-outline-dark btn-block">품절</button>
+                                    <button type="button" class="btn btn-minimalis-outline-dark btn-block borderRound">품절</button>
                                 </div><!-- end col -->
                             </div><!-- end row -->
                         </div><!-- end col -->
@@ -254,12 +257,12 @@
                             <div class="row mb-lg-5">
                                 <div class="col-6">
                                     <a th:href="${item.itemImgDtoList[0].imgUrl}">
-                                        <img class="w-100" th:src="${item.itemImgDtoList[1].imgUrl}" th:alt="${item.itemNm}" />
+                                        <img class="w-100 borderRound" th:src="${item.itemImgDtoList[1].imgUrl}" th:alt="${item.itemNm}" />
                                     </a>
                                 </div><!-- end col -->
                                 <div class="col-6">
                                     <a th:href="${item.itemImgDtoList[0].imgUrl}">
-                                        <img class="w-100" th:src="${item.itemImgDtoList[2].imgUrl}" th:alt="${item.itemNm}" />
+                                        <img class="w-100 borderRound" th:src="${item.itemImgDtoList[2].imgUrl}" th:alt="${item.itemNm}" />
                                     </a>
                                 </div><!-- end col -->
                             </div><!-- end row -->
@@ -272,7 +275,7 @@
 
                             <h4 class="font-weight-normal mb-40px">[*로스터리소개:구현필요*]</h4>
 
-                            <img class="w-100 mb-4" th:src="${item.itemImgDtoList[3].imgUrl}" alt="" />
+                            <img class="w-100 mb-4 borderRound" th:src="${item.itemImgDtoList[3].imgUrl}" alt="" />
 
                             <ul class="list-group list-group-flush border-bottom">
                                 <li class="list-group-item">
@@ -370,15 +373,27 @@
                                         <h5 class="font-weight-normal mb-0">FREE 2-Day Shipping</h5>
                                     </li><!-- end list-group-item -->
 
+                                    <!-- 주문 수량 조절 -->
                                     <li class="list-group-item border-bottom-0 py-25px">
-                                        <div class="qty-container">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="field2" value="1">
-                                                <div class="input-group-append">
-                                                    <button class="qty" type="button" data-func="plus" data-field="field2"><i class="flaticon-play-button"></i></button>
-                                                    <button class="qty" type="button" data-func="minus" data-field="field2"><i class="flaticon-play-button-1"></i></button>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="qty-container">
+                                                    <div class="input-group">
+                                                        <input type="number" name="count" id="count" class="form-control borderRound" value="1" min="1">
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div class="col text-right">
+                                                <ul class="list-inline">
+                                                    <li class="list-inline-item mr-4">
+                                                        <h5>Total</h5>
+                                                    </li>
+                                                    <!-- 주문 합계 금액 -->
+                                                    <li class="list-inline-item mr-4">
+                                                        <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+                                                    </li>
+                                                </ul>
+                                            </div><!-- end col -->
                                         </div>
                                     </li><!-- end list-group-item -->
                                 </ul><!-- end list-group -->
@@ -386,17 +401,17 @@
                                 <!-- 장바구니, 주문하기 버튼 -->
                                 <div th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}" class="row mt-3 mb-4">
                                     <div class="col-12 col-sm-6">
-                                        <button type="button" class="btn btn-minimalis-outline-dark btn-block" onclick="addCart()">장바구니 담기</button>
+                                        <button type="button" class="btn btn-minimalis-outline-dark btn-block borderRound" onclick="addCart()">장바구니 담기</button>
                                     </div><!-- end col -->
                                     <div class="col-12 col-sm-6">
-                                        <button type="button" class="btn btn-minimalis-dark btn-block" onclick="order()">주문하기</button>
+                                        <button type="button" class="btn btn-minimalis-dark btn-block borderRound" onclick="order()">주문하기</button>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
 
                                 <!-- 품절 버튼 -->
                                 <div th:unless="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}" class="row mt-3 mb-4">
                                     <div class="col-12">
-                                        <button type="button" class="btn btn-minimalis-outline-dark btn-block">품절</button>
+                                        <button type="button" class="btn btn-minimalis-outline-dark btn-block borderRound">품절</button>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
 
