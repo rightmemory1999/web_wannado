@@ -32,4 +32,49 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    /**
+     * 주문상품을 주문객체에 더하는 메서드
+     * 1. 주문상품을 order 객체의 orderItems 에 추가한다.
+     * 2. orderItem 객체에 order 객체를 세팅한다.
+     * @param orderItem 주문상품
+     */
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    /**
+     * 주문 객체(주문서)를 생성하는 메서드
+     * 1. 상품을 주문한 회원정보를 세팅한다.
+     * 2. 주문 객체에 주문상품 객체를 추가한다.
+     * 3. 주문상태를 ORDER 상태로 세팅한다.
+     * 4. 주문시간을 현재시간으로 세팅한다.
+     * @param member 회원정보
+     * @param orderItemList 주문한 아이템목록
+     * @return
+     */
+    public static Order createOrder(Member member, List<OrderItem> orderItemList) {
+        Order order = new Order();
+        order.setMember(member);
+
+        for(OrderItem orderItem : orderItemList) {
+            order.addOrderItem(orderItem);
+        }
+
+        order.setOrderStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+    /**
+     * 주문목록의 총주문금액을 구하는 메서드
+     * @return 총주문금액
+     */
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for(OrderItem orderItem : orderItems){
+            totalPrice += orderItem.getTotalPrice();
+        }
+        return totalPrice;
+    }
 }

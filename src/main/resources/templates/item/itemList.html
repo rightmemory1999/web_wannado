@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}"
       lang="kr">
 
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
 
 <div layout:fragment="content">
 
@@ -226,16 +230,16 @@
                     <div class="widgets mb-3">
                         <h4 class="font-weight-bolder mb-4">Price</h4>
 
-                        <form method="post" class="price-range" data-start-min="100" data-start-max="350" data-min="100" data-max="500" data-step="1">
+                        <form method="post" class="price-range" data-start-min="10000" data-start-max="25000" data-min="5000" data-max="50000" data-step="1000">
                             <div class="ui-range-slider mb-3"></div>
 
                             <div class="d-flex justify-content-between ui-range-values">
                                 <div class="flex-grow-1 ui-range-value-min">
-                                    <h6 class="font-weight-normal">From: </h6><h5 class="font-weight-bold"><span></span>€</h5>
+                                    <h6 class="font-weight-normal">From: </h6><h5 class="font-weight-bold"><span></span>원</h5>
                                     <input type="hidden">
                                 </div>
                                 <div class="ui-range-value-max">
-                                    <h6 class="font-weight-normal">To: </h6><h5 class="font-weight-bold"><span></span>€</h5>
+                                    <h6 class="font-weight-normal">To: </h6><h5 class="font-weight-bold"><span></span>원</h5>
                                     <input type="hidden">
                                 </div>
                             </div>

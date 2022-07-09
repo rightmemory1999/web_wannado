@@ -33,8 +33,8 @@
 
             var url = "/order";
             var paramData = {
-                itemId : $("#itemId").val(),
-                count : $("#count").val()
+                itemId: $("#itemId").val(),
+                count: $("#count").val()
             };
 
             var param = JSON.stringify(paramData);
@@ -61,6 +61,7 @@
                         location.href='/members/login';
                     } else{
                         alert(jqXHR.responseText);
+                        alert(this.data);
                     }
 
                 }
@@ -110,39 +111,11 @@
     </script>
 </th:block>
 
-<!-- 사용자 CSS 추가 -->
-<th:block layout:fragment="css">
-    <style>
-        .mgb-15{
-            margin-bottom:15px;
-        }
-        .mgt-30{
-            margin-top:30px;
-        }
-        .mgt-50{
-            margin-top:50px;
-        }
-        .repImgDiv{
-            margin-right:15px;
-            height:auto;
-            width:50%;
-        }
-        .repImg{
-            width:100%;
-            height:400px;
-        }
-        .wd50{
-            height:auto;
-            width:50%;
-        }
-    </style>
 </th:block>
 
 <div layout:fragment="content">
 
-    <!-- 제품아이디, 제품가격 가져오기 -->
     <input type="hidden" id="itemId" th:value="${item.id}">
-    <input type="hidden" th:value="${item.price}" id="price" name="price">
 
     <!-- start section -->
     <section class="bg-light overflow-hidden">
@@ -171,7 +144,8 @@
                             <ul class="list-group list-group-flush border-top">
                                 <li class="list-group-item py-25px">
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col">원
+                                            <input type="hidden" th:value="${item.price}" id="price" name="price">
                                             <h3 class="font-weight-normal mb-0"><span th:text="${item.price}"></span>원</h3>
                                         </div><!-- end col -->
                                         <div class="col text-right d-none d-sm-block">
@@ -200,7 +174,7 @@
                                         <div class="col">
                                             <div class="qty-container">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="count" value="1" min="1">
+                                                    <input type="number" class="form-control" name="count" value="1" min="1">
                                                     <div class="input-group-append">
                                                         <button class="qty" type="button" data-func="plus" data-field="count"><i class="flaticon-play-button"></i></button>
                                                         <button class="qty" type="button" data-func="minus" data-field="count"><i class="flaticon-play-button-1"></i></button>
