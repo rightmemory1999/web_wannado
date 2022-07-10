@@ -77,4 +77,16 @@ public class Order extends BaseEntity {
         }
         return totalPrice;
     }
+
+    /**
+     * 주문상태를 취소상태로 바꿔주는 메서드
+     * cancel() 메서드로 주문상품 수량을 되돌려준다.
+     */
+    public void cancelOrder() {
+        this.orderStatus = OrderStatus.CANCEL;
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
 }

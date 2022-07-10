@@ -46,10 +46,9 @@ public class Item extends BaseEntity {
     }
 
     /**
-     * 상품주문시 상품재고를 감소시키는 메서드 (엔티티 클래스 안에 비즈니스 로직을 작성 -> 코드 재사용성 증가 + 데이터 변경포인트를 한군데서 관리)
-     * 1. 상품재고수량에서 주문 후 남은 재고수량을 구한다.
-     * 2. 상품재고가 주문수량보다 적을 경우 OutOfStockException 을 발생시킨다.
-     * 3. 주문 후 남은 재고수량을 상품의 현재재고 값으로 할당한다.
+     * 상품재고를 감소시키는 메서드 (엔티티 클래스 안에 비즈니스 로직을 작성 -> 코드 재사용성 증가 + 데이터 변경포인트를 한군데서 관리)
+     * 현재고수량이 파라미터로 들어온 수량보다 적으면 오류메세지를 넘긴다.
+     * 재고수량이 0 이 되면 상품판매상태를 품절로 변경한다.
      * @param stockNumber 재고수량
      */
     public void removeStock(int stockNumber){
@@ -61,5 +60,18 @@ public class Item extends BaseEntity {
         }
         this.stockNumber = restStock;
     }
+
+    /**
+     * 상품재고를 더해주는 메서드
+     * 제품이 품절상태라면 판매중으로 변경한다.
+     * @param stockNumber
+     */
+    public void addStock(int stockNumber){
+        this.stockNumber += stockNumber;
+        if (this.itemSellStatus == ItemSellStatus.SOLD_OUT) {
+            itemSellStatus = ItemSellStatus.SELL;
+        }
+    }
+
 
 }
