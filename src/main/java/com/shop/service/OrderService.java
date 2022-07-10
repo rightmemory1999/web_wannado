@@ -124,4 +124,29 @@ public class OrderService {
         order.cancelOrder();
     }
 
+    /**
+     * 장바구니에서 주문할 상품데이터를 전달 받아 주문을 생성하는 로직
+     * @param orderDtoList 주문리스트
+     * @param email 회원이메일
+     * @return 주문번호
+     */
+    public Long orders(List<OrderDto> orderDtoList, String email){
+
+        Member member = memberRepository.findByEmail(email);
+        List<OrderItem> orderItemList = new ArrayList<>();
+
+        for (OrderDto orderDto : orderDtoList) {
+            Item item = itemRepository.findById(orderDto.getItemId())
+                    .orElseThrow(EntityNotFoundException::new);
+
+            OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+            orderItemList.add(orderItem);
+        }
+
+        Order order = Order.createOrder(member, orderItemList);
+        orderRepository.save(order);
+
+        return order.getId();
+    }
+
 }
