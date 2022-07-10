@@ -192,11 +192,48 @@
     </style>
 </th:block>
 
-<div layout:fragment="content" class="content-mg">
+<div layout:fragment="content">
 
-    <h2 class="mb-4">
-        장바구니 목록
-    </h2>
+    <nav class="navbar sticky-filter navbar-expand navbar-light bg-light navbar-filter menu-border border-bottom overflow-auto px-0">
+        <ul class="navbar-nav mr-auto ml-auto flex-nowrap">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="my-profile.html">
+                    My Profile
+                </a>
+            </li><!-- end nav-item -->
+
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/orders}">
+                    My Orders
+                </a>
+            </li><!-- end nav-item -->
+
+            <li class="nav-item active text-nowrap">
+                <a class="nav-link text-primary" th:href="@{/cart}">
+                    My Cart
+                </a>
+            </li><!-- end nav-item -->
+
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="wishlist.html">
+                    Wishlist
+                </a>
+            </li><!-- end nav-item -->
+
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="account.html">
+                    Account
+                </a>
+            </li><!-- end nav-item -->
+        </ul><!-- end navbar-nav -->
+    </nav><!-- end navbar -->
+
+    <section class="pt-6 pb-7 bg-white">
+    <div class="row justify-content-center text-center mb-5">
+        <div class="col-11 col-md-10 col-lg-6">
+            <h2 class="font-weight-bold">장바구니</h2>
+        </div><!-- end col -->
+    </div><!-- end row -->
 
     <div>
 
@@ -251,15 +288,24 @@
             </tbody>
         </table>
 
-        <h2 class="text-center">
-            총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
-        </h2>
+        <div class="row text-right mt-4">
+            <div class="col-12 px-2 mb-4">
+                <div class="card border-0">
+                    <div class="card-body bg-light">
+                        <h5 class="font-weight-normal mb-0">총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span></h5>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div><!-- end col -->
 
-        <div class="text-center mt-3">
-            <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
-        </div>
+            <div class="col-12">
+                <a th:href="@{shop}" class="btn btn-minimalis-outline-dark mb-2">더 둘러보기</a>
+                <a href="#" class="btn btn-minimalis-dark ml-3 mb-2" onclick="orders()">주문하기</a>
+            </div><!-- end col -->
+        </div><!-- end row -->
 
     </div>
+    </section>
+
 
 </div>
 

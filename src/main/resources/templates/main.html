@@ -265,16 +265,16 @@
                                         <i class="flaticon-like-1 h3 after d-none"></i>
                                     </span>
                             </button>
-
-                            <button class="btn-circle add-to-cart btn-primary btn-small btn-sm-medium btn-md-small btn-lg-large" type="button" onclick="addCart()">
-                                <i class="add-to-cart-active flaticon-plus h6"></i>
-                                <span class="add-to-cart-hover">
-                                    <input type="hidden" id="itemId" th:value="${item.id}">
-                                    <input type="hidden" id="count" value="1">
-                                        <span class="add-to-cart-text">Add to cart</span>
-                                    </span>
-                                <i class="add-to-cart-success flaticon-null h6"></i>
-                            </button>
+<!-- 장바구니 추가시 동일한 상품이 추가되는 오류 -->
+<!--                            <button class="btn-circle add-to-cart btn-primary btn-small btn-sm-medium btn-md-small btn-lg-large" type="button" onclick="addCart()">-->
+<!--                                <i class="add-to-cart-active flaticon-plus h6"></i>-->
+<!--                                <span class="add-to-cart-hover">-->
+<!--                                    <input type="hidden" id="itemId" th:value="${item.id}">-->
+<!--                                    <input type="hidden" id="count" value="1">-->
+<!--                                        <span class="add-to-cart-text">Add to cart</span>-->
+<!--                                    </span>-->
+<!--                                <i class="add-to-cart-success flaticon-null h6"></i>-->
+<!--                            </button>-->
                         </div><!-- end card-img -->
                         <div class="card-body px-0">
                             <h3 class="font-size-h6 font-size-sm-h5 font-size-lg-h3 font-weight-bold text-uppercase mb-1">
