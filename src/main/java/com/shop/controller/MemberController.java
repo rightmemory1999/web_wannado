@@ -65,13 +65,11 @@ public class MemberController {
         return "member/memberUpdateForm";
     }
     @PostMapping("/update")
-    public String updateUser(MemberFormDto memberFormDto, RedirectAttributes redirectAttributes){
+    public String updateUser(MemberFormDto memberFormDto){
         memberService.updateMember(memberFormDto);
-        redirectAttributes.addAttribute("memberUpdateDto",memberFormDto.getEmail());
         return "redirect:/";
     }
 
-//    select로 읽히더라
 //    @GetMapping("/delete")
 //    public String deleteM(Authentication authentication,Model model){
 //        Member member =memberService.getMemberByEmail(authentication.getName());
