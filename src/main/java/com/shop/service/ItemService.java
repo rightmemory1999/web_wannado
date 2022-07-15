@@ -94,4 +94,8 @@ public class ItemService {
     public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         return itemRepository.getMainItemPage(itemSearchDto, pageable);
     }
+
+    public Page<MainItemDto> searchByCoffeePage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.searchByCoffeeBeanPage(itemSearchDto, pageable);
+    }
 }

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}"
+      lang="kr">
+
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        $(document).ready(function() {
+            $('input[type=checkbox][name=coffeeBean]').change(function(){
+                if ($(this).is(':checked')) {
+                    alert(`${this.value} is checked`);
+                }
+                else {
+                    alert(`${this.value} is unchecked`);
+                }
+            })
+        })
+
+        function check(box){
+
+            if(box.checked == true)
+                location.href="/search/" + "?searchCoffeeBean=" + box.value;
+            else
+                location.href="/search/";
+
+
+        $(document).ready(function(){
+            $("#searchBtn").on("click",function(e) {
+                e.preventDefault();
+                page(0);
+            });
+        });
+
+        function page(page){
+            var searchCoffeeBean = ${"#searchCoffeeBean"}.val();
+            var searchTaste = ${"#searchTaste"}.val();
+
+            location.href="/search/" + "?searchCoffeeBean=" + searchCoffeeBean
+                + "&searchTaste=" + searchTaste;
+        }
+
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+    <form th:action="@{'/search/'}" role="form" method="get" th:object="${items}">
+    <!-- 상단 제목 시작 -->
+    <section class="pt-4 pb-4 pt-lg-4 pb-lg-2">
+        <div class="container-lg container-fluid">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 text-center">
+
+                    <h2 class="font-weight-bolder text-primary mb-0 mb-lg-3">모든 커피</h2>
+
+                </div><!-- end col -->
+
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+    <!-- 상단 제목 끝 -->
+
+    <!-- start product section -->
+
+    <section class="pt-1 pb-4 pb-md-5 pt-lg-3 pb-lg-7 bg-white">
+        <div class="container-lg container-fluid">
+            <div class="row">
+
+                <!-- start sidebar -->
+                <div class="form-inline justify-content-center" th:object="${itemSearchDto}">
+
+                    <div class="widgets mb-3" th:field="*{searchCoffeeBean}" >
+                        <h4 class="font-weight-bolder mb-4">원두 찾기</h4>
+
+                        <div class="form-group mb-3">
+                            <div class="custom-control custom-checkbox" >
+                                <input type="checkbox" class="custom-control-input" id="DECAFFEIN" value="DECAFFEIN" name="coffeeBean">
+                                <label class="custom-control-label" for="DECAFFEIN" >디카페인</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="custom-control custom-checkbox" >
+                                <input type="checkbox" class="custom-control-input rounded-0" id="SINGLE_ORIGIN" name="coffeeBean">
+                                <label class="custom-control-label" for="SINGLE_ORIGIN">싱글 오리진</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="custom-control custom-checkbox" >
+                                <input type="checkbox" class="custom-control-input rounded-0" id="BLEND" name="BLEND">
+                                <label class="custom-control-label" for="BLEND">블렌드</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="widgets mb-3">
+                        <h4 class="font-weight-bolder mb-4">원두 선택</h4>
+                        <select th:field="*{searchCoffeeBean}" class="form-control" style="width:auto;">
+                            <option value="">전체</option>
+                            <option value="DECAFFEIN">디카페인</option>
+                            <option value="SINGLE_ORIGIN">싱글오리진</option>
+                            <option value="BLEND">블렌드</option>
+                        </select>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <div class="widgets mb-3">
+                        <h4 class="font-weight-bolder mb-4">맛/향 선택</h4>
+                        <select th:field="*{searchTaste}" class="form-control" style="width:auto;">
+                            <option value="">전체</option>
+                            <option value="달콤">달콤</option>
+                            <option value="쌉쌀">쌉쌀</option>>
+                            <option value="밸런스">밸런스</option>
+                            <option value="깔끔한">깔끔한</option>
+                        </select>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+                    <hr class="my-4" />
+                </div><!-- end col -->
+
+
+
+                <!-- start content -->
+                <div class="col-12 col-lg-9">
+                    <div class="row">
+                        <!-- th block 시작 -->
+                        <th:block th:each="item, status: ${items.getContent()}">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-6 col-xl-4">
+                                <div class="card product-card-style border-0 bg-gray-200 borderRound">
+                                    <div class="card-img overflow-hidden">
+                                        <!-- Image -->
+                                        <figure class="mb-0">
+                                            <img th:src="${item.imgUrl}" th:alt="${item.itemNm}">
+                                        </figure>
+
+                                        <!-- Action -->
+                                        <button class="card-action hover-card-action action-top action-right" type="button">
+                                            <span class="like-product">
+                                                <i class="flaticon-like h3"></i>
+                                                <i class="flaticon-like-1 h3 after d-none"></i>
+                                            </span>
+                                        </button>
+
+                                        <span class="card-action action-top action-left">
+                                            <span class="badge badge-primary rounded-lg font-weight-bold text-uppercase px-3 py-2">[*NEW*]</span>
+                                        </span>
+                                        <!--                                    <span class="card-action action-top action-left">-->
+                                        <!--                                            <span class="badge badge-danger rounded-0 font-weight-bold text-uppercase px-3 py-2">-30%</span>-->
+                                        <!--                                        </span>-->
+                                        <!--                                    <span class="card-action action-top action-left">-->
+                                        <!--                                            <span class="badge badge-warning rounded-0 font-weight-bold text-uppercase px-3 py-2">Out of stock</span>-->
+                                        <!--                                        </span>-->
+                                    </div><!-- end card-img -->
+
+                                    <div class="card-body">
+                                        <div class="block-content text-center">
+                                            <h6 class="font-weight-normal text-uppercase mb-3">[*로스터리이름:구현필요*]</h6>
+                                            <h5 class="font-weight-bolder text-uppercase mb-3"><a class="text-dark" th:href="'/item/' +${item.id}">[[${item.itemNm}]]</a></h5>
+                                            <p class="font-weight-normal">[[${item.price}]]원</p>
+
+                                            <div class="d-flex mt-4">
+                                                <div class="flex-grow-1 pl-1">
+                                                    <a href="#" class="btn btn-outline-dark btn-block font-weight-bolder borderRound">
+                                                        Add to cart
+                                                    </a>
+                                                </div><!-- end col -->
+                                                <div class="pl-2 pr-1">
+                                                    <a href="#" class="btn btn-outline-dark font-weight-bolder borderRound" style="min-width: 40px;" data-toggle="modal" data-target="#quickViewModal">
+                                                        <i class="flaticon-visibility"></i>
+                                                    </a>
+                                                </div>
+                                            </div><!-- end d-flex -->
+                                        </div><!-- end block-content -->
+                                    </div><!-- end card-body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+                        </th:block>
+                        <!-- th block 끝 -->
+                    </div><!-- end row -->
+
+                    <!-- 페이지 이동 버튼 -->
+                    <div th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})" >
+                        <ul class="pagination justify-content-center">
+
+                            <li class="page-item" th:classappend="${items.first}?'disabled'">
+                                <a th:onclick="'javascript:page(' + ${items.number - 1} + ')'" aria-label='Previous' class="page-link">
+                                    <span aria-hidden='true'>Previous</span>
+                                </a>
+                            </li>
+
+                            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${items.number eq page-1}?'active':''">
+                                <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${items.last}?'disabled'">
+                                <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'" aria-label='Next' class="page-link">
+                                    <span aria-hidden='true'>Next</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+    <!-- end product section -->
+
+    <!-- Javascript File -->
+    <script type="text/javascript" th:src="@{/assets/js/theme.js?cb=1609799846196}"></script>
+    </form>
+</div>
+
+</html>

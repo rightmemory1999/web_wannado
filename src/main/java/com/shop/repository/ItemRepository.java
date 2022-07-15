@@ -12,6 +12,10 @@ public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredi
 
     List<Item> findByItemNm(String itemNm);
 
+    List<Item> findByCoffeeTaste(String taste);
+
+    List<Item> findByCoffeeBean(String coffeeBean);
+
     List<Item> findByItemNmOrItemDetail(String itemNm, String itemDetail);
 
     List<Item> findByPriceLessThan(Integer price);
