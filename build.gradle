@@ -47,6 +47,9 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	implementation 'org.modelmapper:modelmapper:3.1.0'
+
+	/* 배포버전 DB */
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
 }
 
 tasks.named('test') {
