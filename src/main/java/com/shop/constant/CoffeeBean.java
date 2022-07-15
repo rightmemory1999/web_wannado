@@ -1,5 +1,5 @@
 package com.shop.constant;
 
 public enum CoffeeBean {
-    SINGLE_ORIGIN, BLEND
+    DECAFFEIN, SINGLE_ORIGIN, BLEND
 }

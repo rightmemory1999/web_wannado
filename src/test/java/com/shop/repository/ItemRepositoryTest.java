@@ -3,6 +3,7 @@ package com.shop.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.shop.constant.CoffeeBean;
 import com.shop.constant.ItemSellStatus;
 import com.shop.entity.Item;
 import com.shop.entity.QItem;
@@ -33,10 +34,12 @@ class ItemRepositoryTest {
         for(int i=1; i<=10; i++) {
             Item item = new Item();
             item.setItemNm("테스트 상품" + i);
+            item.setCoffeeTaste("테스트향" + i);
             item.setPrice(10000+i);
             item.setItemDetail("테스트 상품 상세 설명" + i);
             item.setItemSellStatus(ItemSellStatus.SELL);
             item.setStockNumber(100);
+            item.setCoffeeBean(CoffeeBean.DECAFFEIN);
             item.setRegTime(LocalDateTime.now());
             item.setUpdateTime(LocalDateTime.now());
             Item savedItem = itemRepository.save(item);
@@ -49,6 +52,26 @@ class ItemRepositoryTest {
     public void findByItemNmTest() {
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemNm("테스트 상품1");
+        for (Item item : itemList) {
+            System.out.println("item = " + item.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("맛과향 조회 테스트")
+    public void findByCoffeeTaste() {
+        this.createItemList();
+        List<Item> itemList = itemRepository.findByCoffeeTaste("테스트향1");
+        for (Item item : itemList) {
+            System.out.println("item = " + item.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("원두 조회 테스트")
+    public void findByCoffeeBeanTest() {
+        this.createItemList();
+        List<Item> itemList = itemRepository.findByCoffeeBean("테스트 상품 원두1");
         for (Item item : itemList) {
             System.out.println("item = " + item.toString());
         }

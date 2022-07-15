@@ -68,11 +68,30 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <select th:field="*{coffeeBean}" class="custom-select">
+                <option value="DECAFFEIN">디카페인</option>
+                <option value="SINGLE_ORIGIN">싱글오리진</option>
+                <option value="BLEND">블렌드</option>
+            </select>
+        </div>
+
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">상품명</span>
             </div>
             <input type="text" th:field="*{itemNm}" class="form-control" placeholder="상품명을 입력해주세요">
+        </div>
+        <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
+
+        <div class="form-group">
+            <select th:field="*{coffeeTaste}" class="custom-select">
+                <option value="" disabled selected>맛과향을 선택해주세요</option>
+                <option value="달콤">달콤</option>
+                <option value="쌉쌀">쌉쌀</option>
+                <option value="밸런스">밸런스</option>
+                <option value="깔끔한">깔끔한</option>
+            </select>
         </div>
         <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
 

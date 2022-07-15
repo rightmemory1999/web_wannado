@@ -4,9 +4,10 @@
       layout:decorate="~{layouts/layout1}"
       lang="kr">
 
+
 <head>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <!--<meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 </head>
 
 <div layout:fragment="content">
@@ -45,22 +46,22 @@
 
                         <div class="form-group mb-3">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="type1">
-                                <label class="custom-control-label" for="category1">디카페인</label>
+                                <input type="checkbox" class="custom-control-input" id="DECAFFEIN">
+                                <label class="custom-control-label" for="DECAFFEIN">디카페인</label>
                             </div>
                         </div>
 
                         <div class="form-group mb-3">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input rounded-0" id="type2">
-                                <label class="custom-control-label" for="category2">싱글 오리진</label>
+                                <input type="checkbox" class="custom-control-input rounded-0" id="SINGLE_ORIGIN">
+                                <label class="custom-control-label" for="SINGLE_ORIGIN">싱글 오리진</label>
                             </div>
                         </div>
 
                         <div class="form-group mb-3">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input rounded-0" id="type3">
-                                <label class="custom-control-label" for="category3">블렌드</label>
+                                <input type="checkbox" class="custom-control-input rounded-0" id="BLEND">
+                                <label class="custom-control-label" for="BLEND">블렌드</label>
                             </div>
                         </div>
 

@@ -19,9 +19,11 @@
             var searchSellStatus = $("#searchSellStatus").val();
             var searchBy = $("#searchBy").val();
             var searchQuery = $("#searchQuery").val();
+            var searchCoffeeBean = ${"#searchCoffeeBean"}.val();
 
             location.href="/admin/items/" + page + "?searchDateType=" + searchDateType
                 + "&searchSellStatus=" + searchSellStatus
+                + "&searchCoffeeBean=" + searchCoffeeBean
                 + "&searchBy=" + searchBy
                 + "&searchQuery=" + searchQuery;
         }
@@ -54,6 +56,7 @@
                 <td>상품아이디</td>
                 <td>상품명</td>
                 <td>상태</td>
+                <td>원두</td>
                 <td>등록자</td>
                 <td>등록일</td>
             </tr>
@@ -65,6 +68,7 @@
                     <a th:href="'/admin/item/'+${item.id}" th:text="${item.itemNm}"></a>
                 </td>
                 <td th:text="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
+                <td th:text="${item.coffeeBean}"></td>
                 <td th:text="${item.createdBy}"></td>
                 <td th:text="${item.regTime}"></td>
             </tr>
@@ -105,6 +109,12 @@
                 <option value="">판매상태(전체)</option>
                 <option value="SELL">판매</option>
                 <option value="SOLD_OUT">품절</option>
+            </select>
+            <select th:field="*{searchCoffeeBean}" class="form-control" style="width:auto;">
+                <option value="">원두(전체)</option>
+                <option value="DECAFFEIN">디카페인</option>
+                <option value="SINGLE_ORIGIN">싱글오리진</option>
+                <option value="BLEND">블렌드</option>
             </select>
             <select th:field="*{searchBy}" class="form-control" style="width:auto;">
                 <option value="itemNm">상품명</option>
