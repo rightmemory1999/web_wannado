@@ -1,5 +1,6 @@
 package com.shop.service;
 
+import com.shop.dto.MemberFormDto;
 import com.shop.entity.Member;
 import com.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,4 +45,34 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString())
                 .build();
     }
+
+    @Transactional
+    public void updateMember(MemberFormDto memberFormDto){
+        Member member = memberRepository.findByEmail(memberFormDto.getEmail());
+        BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+        member.update(
+                memberFormDto.getName(),
+                memberFormDto.getEmail(),
+                encoder.encode(memberFormDto.getPassword()),
+                memberFormDto.getAddress(),
+                memberFormDto.getDetailAddress(),
+                memberFormDto.getExtraAddress()
+        );
+    }
+    @Transactional
+    public Member getMemberByEmail(String email){
+        Member member = memberRepository.findByEmail(email);
+        return member;
+    }
+
+//    @Transactional
+//    public void deleteMember(String email){
+//        Member member = memberRepository.findByEmail(email);
+//        memberRepository.delete(member);
+//    }
+
+//    @Transactional
+//    public void deleteMember(MemberUpdateDto memberUpdateDto){
+//        memberRepository.deleteMemberByEmail(memberUpdateDto.getEmail());
+//    }
 }

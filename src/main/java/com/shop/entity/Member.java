@@ -30,6 +30,12 @@ public class Member extends BaseEntity {
 
     private String address;
 
+    private String detailAddress;
+
+    private String extraAddress;
+
+//    private String isExited;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -38,10 +44,25 @@ public class Member extends BaseEntity {
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
         member.setAddress(memberFormDto.getAddress());
+        member.setDetailAddress(memberFormDto.getDetailAddress());
+        member.setExtraAddress(memberFormDto.getExtraAddress());
         String password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
         member.setRole(Role.ADMIN);
         return member;
     }
+
+    public void update(String name,String email,String password,String address,String detailAddress,String extraAddress){
+        this.name=name;
+        this.email=email;
+        this.password=password;
+        this.address=address;
+        this.detailAddress=detailAddress;
+        this.extraAddress=extraAddress;
+    }
+
+//    public void delete(String isExited){
+//        this.isExited=isExited;
+//    }
 }
 
