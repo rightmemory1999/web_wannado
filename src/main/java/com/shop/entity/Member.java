@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member")
@@ -15,7 +16,6 @@ import javax.persistence.*;
 @Setter
 @ToString
 public class Member extends BaseEntity {
-
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +34,7 @@ public class Member extends BaseEntity {
 
     private String extraAddress;
 
-//    private String isExited;
+    private boolean isDeleted;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -49,6 +49,7 @@ public class Member extends BaseEntity {
         String password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
         member.setRole(Role.ADMIN);
+        member.setDeleted(false);
         return member;
     }
 
@@ -60,9 +61,5 @@ public class Member extends BaseEntity {
         this.detailAddress=detailAddress;
         this.extraAddress=extraAddress;
     }
-
-//    public void delete(String isExited){
-//        this.isExited=isExited;
-//    }
 }
 

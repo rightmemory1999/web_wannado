@@ -37,6 +37,8 @@ public class MemberService implements UserDetailsService {
 
         if (member == null) {
             throw new UsernameNotFoundException(email);
+        } else if (member.isDeleted()==true){
+            throw new UsernameNotFoundException(email);
         }
 
         return User.builder()
@@ -64,15 +66,9 @@ public class MemberService implements UserDetailsService {
         Member member = memberRepository.findByEmail(email);
         return member;
     }
-
-//    @Transactional
-//    public void deleteMember(String email){
-//        Member member = memberRepository.findByEmail(email);
-//        memberRepository.delete(member);
-//    }
-
-//    @Transactional
-//    public void deleteMember(MemberUpdateDto memberUpdateDto){
-//        memberRepository.deleteMemberByEmail(memberUpdateDto.getEmail());
-//    }
+    @Transactional
+    public void deleteMember(Member member){
+        member.setPassword("");
+        member.setDeleted(true);
+    }
 }
