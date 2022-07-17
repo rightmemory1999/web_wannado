@@ -22,6 +22,18 @@ public class ItemDto {
 
     private String coffeeBeanCd;
 
+    private String roasteryNm;
+
+    private String roasteryDetail;
+
+    private String extraction;
+
+    private String origin;
+
+    private String process;
+
+    private String kind;
+
     private LocalDateTime regTime;
 
     private LocalDateTime updateTime;

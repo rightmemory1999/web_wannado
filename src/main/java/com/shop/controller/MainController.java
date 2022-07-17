@@ -45,7 +45,7 @@ public class MainController {
         return "item/itemList";
     }
 
-    @GetMapping(value = "/search")
+    /*@GetMapping(value = "/search")
     public String search(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
 
         Pageable pageable = PageRequest.of(page.orElse(0), 15);
@@ -55,7 +55,7 @@ public class MainController {
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage", 5);
 
-        return "item/searchItem";
-    }
+        return "item/itemList";
+    }*/
 
 }

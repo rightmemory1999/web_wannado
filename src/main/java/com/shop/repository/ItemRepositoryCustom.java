@@ -17,6 +17,6 @@ public interface ItemRepositoryCustom {
 
     Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable);
 
-    Page<MainItemDto> searchByCoffeeBeanPage(ItemSearchDto itemSearchDto, Pageable pageable);
+    /*Page<MainItemDto> searchByCoffeeBeanPage(ItemSearchDto itemSearchDto, Pageable pageable);*/
 
 }

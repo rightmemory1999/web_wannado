@@ -44,6 +44,26 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CoffeeBean coffeeBean;  // 원두, ex. 싱글 오리진, 블렌드..
 
+    @Column(nullable = false)
+    private String roasteryNm;  // 로스터리 이름
+
+    @Lob
+    @Column(nullable = false)
+    private String roasteryDetail;  // 로스터리 소개
+
+    @Column(nullable = false)
+    private String extraction;  // 추출 방법
+
+    @Column(nullable = false)
+    private String origin;  // 원산지
+
+    @Column(nullable = false)
+    private String process;  // 가공 방식
+
+    @Column(nullable = false)
+    private String kind;  // 품종
+
+
     public void updateItem(ItemFormDto itemFormDto) {
         this.itemNm = itemFormDto.getItemNm();
         this.coffeeTaste = itemFormDto.getCoffeeTaste();
@@ -52,6 +72,12 @@ public class Item extends BaseEntity {
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
         this.coffeeBean = itemFormDto.getCoffeeBean();
+        this.roasteryNm = itemFormDto.getRoasteryNm();
+        this.roasteryDetail = itemFormDto.getRoasteryDetail();
+        this.extraction = itemFormDto.getExtraction();
+        this.origin = itemFormDto.getOrigin();
+        this.process = itemFormDto.getProcess();
+        this.kind = itemFormDto.getKind();
     }
 
     /**

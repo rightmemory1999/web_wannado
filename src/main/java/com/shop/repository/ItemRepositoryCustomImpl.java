@@ -110,14 +110,17 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         new QMainItemDto(
                                 item.id,
                                 item.itemNm,
+                                item.roasteryNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,
                                 item.price)
                 )
                 .from(itemImg)
                 .join(itemImg.item, item)
-                .where(itemImg.frontImgYn.eq("Y"))
-                .where(itemNmLike(itemSearchDto.getSearchQuery()))
+                .where(itemImg.frontImgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()))
                 .orderBy(item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -127,15 +130,17 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .select(Wildcard.count)
                 .from(itemImg)
                 .join(itemImg.item, item)
-                .where(itemImg.frontImgYn.eq("Y"))
-                .where(itemNmLike(itemSearchDto.getSearchQuery()))
+                .where(itemImg.frontImgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()))
                 .fetchOne()
                 ;
 
         return new PageImpl<>(content, pageable, total);
     }
 
-    @Override
+    /*@Override
     public Page<MainItemDto> searchByCoffeeBeanPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         QItem item = QItem.item;
         QItemImg itemImg = QItemImg.itemImg;
@@ -145,6 +150,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         new QMainItemDto(
                                 item.id,
                                 item.itemNm,
+                                item.roasteryNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,
                                 item.price)
@@ -172,6 +178,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 ;
 
         return new PageImpl<>(content, pageable, total);
-    }
+    }*/
 
 }
