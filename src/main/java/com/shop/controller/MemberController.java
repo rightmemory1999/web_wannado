@@ -48,13 +48,13 @@ public class MemberController {
 
     @GetMapping("/login")
     public String loginMember() {
-        return "/member/memberLoginForm";
+        return "member/memberLoginForm";
     }
 
     @GetMapping("/login/error")
     public String loginError(Model model) {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
-        return "/member/memberLoginForm";
+        return "member/memberLoginForm";
     }
 
     @GetMapping("/update")
@@ -72,7 +72,7 @@ public class MemberController {
 
     @GetMapping("/delete")
     public String deleteM(){
-        return "/member/memberDeleteForm";
+        return "member/memberDeleteForm";
     }
     @PostMapping("/delete")
     public String deleteUser(Authentication authentication, HttpSession session, MemberFormDto memberFormDto, Model model){
@@ -81,7 +81,7 @@ public class MemberController {
         String inputPass = memberFormDto.getPassword();
         if (passwordEncoder.matches(inputPass,oriPass) == false){
             model.addAttribute("message","비밀번호를 확인해주세요");
-            return "/member/memberDeleteForm";
+            return "member/memberDeleteForm";
         }
         memberService.deleteMember(deleteMem);
         session.invalidate();
