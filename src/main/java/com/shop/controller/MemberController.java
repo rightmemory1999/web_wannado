@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.PrintWriter;
 
 @RequestMapping("/members")
 @Controller
@@ -29,7 +31,6 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    @ResponseBody
     public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()) {
@@ -42,12 +43,18 @@ public class MemberController {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
-        return "<script>"
-                + "alert(\"회원가입 되었습니다.\");"
-                + "location.href=\"/\";"
-                + "</script>";
+        return "redirect:/members/new/check";
     }
 
+    @GetMapping("/new/check")
+    public void newCheck(HttpServletResponse response) throws Exception{
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script>"+"alert('회원 가입을 축하드립니다.');"+"location.href='/'"+"</script>");
+        printWriter.flush();
+    }
+    
     @GetMapping("/login")
     public String loginMember() {
         return "/member/memberLoginForm";
@@ -65,13 +72,18 @@ public class MemberController {
         return "member/memberUpdateForm";
     }
     @PostMapping("/update")
-    @ResponseBody
     public String updateUser(@Valid MemberFormDto memberFormDto){
         memberService.updateMember(memberFormDto);
-        return "<script>"
-                + "alert(\"회원 수정하셨습니다.\");"
-                + "location.href=\"/\";"
-                + "</script>";
+        return "redirect:/members/update/check";
+    }
+
+    @GetMapping("/update/check")
+    public void updateCheck(HttpServletResponse response) throws Exception{
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println("<script>"+"alert('회원 수정하셨습니다.');"+"location.href='/'"+"</script>");
+        printWriter.flush();
     }
 
     @GetMapping("/delete")
