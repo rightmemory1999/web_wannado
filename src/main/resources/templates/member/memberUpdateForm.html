@@ -88,10 +88,10 @@
                             <div class="row justify-content-center">
                                 <div class="col-12 col-sm-10 col-lg-9 col-xl-8 py-40px py-md-8">
                                     <h1 class="font-size-md-display4 font-weight-medium mb-40px mb-md-5">
-                                        회원가입
+                                        회원수정
                                     </h1>
 
-                                    <form action="/members/new" role="form" method="post" th:object="${memberFormDto}">
+                                    <form action="/members/update" role="form" method="post" th:object="${memberFormDto}">
 
                                         <div class="form-group mb-20px">
                                             <label th:for="name">Name*</label>
@@ -101,7 +101,7 @@
 
                                         <div class="form-group mb-20px">
                                             <label th:for="email">Email address*</label>
-                                            <input type="email" class="form-control" th:field="*{email}" placeholder="email@example.com">
+                                            <input type="email" class="form-control" th:field="*{email}" placeholder="email@example.com" readonly>
                                             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect data</p>
                                         </div><!-- end form-group -->
 
@@ -126,7 +126,18 @@
                                         <div class="form-group mb-25px mb-md-4">
                                             <button type="submit" class="btn btn-minimalis-dark btn-arrow btn-block">
                                                     <span class="inner-btn">
-                                                        Register
+                                                        Edit Profile
+                                                        <span class="arrow">
+                                                            <span class="arrow-icon"></span>
+                                                        </span>
+                                                    </span>
+                                            </button>
+                                        </div><!-- end form-group -->
+
+                                        <div class="form-group mb-25px mb-md-4">
+                                            <button type="submit" class="btn btn-minimalis-dark btn-arrow btn-block">
+                                                    <span class="inner-btn">
+                                                        <a href="/members/delete">Delete Account</a>
                                                         <span class="arrow">
                                                             <span class="arrow-icon"></span>
                                                         </span>
