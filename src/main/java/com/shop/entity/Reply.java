@@ -30,6 +30,7 @@ public class Reply extends BaseEntity {
     private Item item;
 
     public void updateReply(ReplyFormDto replyFormDto) {
-
+        this.star = replyFormDto.getStar();
+        this.replyContent = replyFormDto.getReplyContent();
     }
 }
