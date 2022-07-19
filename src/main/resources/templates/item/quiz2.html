@@ -9,10 +9,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나의 커피 찾기</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">-->
 </head>
 
 <!-- 사용자 스크립트 추가 -->
@@ -38,53 +38,53 @@
         };
 
         var result={
-            "SSHC":{"extra":"SSHC",
-            "explain":"싱글오리진 원두에, 달콤한 맛의 콜롬비아산 커피를 핸드드립으로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/1.png"},
+            "SSHC":{"abbr":"SSHC", "recommend":"싱달콜핸",
+            "explain":"싱글오리진 원두에,<br> 달콤한 맛의<br> 콜롬비아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/1.png"},
 
-            "SSHE":{"extra":"SSHE",
-            "explain":"싱글오리진 원두에, 달콤한 맛의 에티오피아산 커피를 핸드드립으로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/2.png"},
+            "SSHE":{"abbr":"SSHE", "recommend":"싱달에핸",
+            "explain":"싱글오리진 원두에,<br> 달콤한 맛의<br> 에티오피아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/2.jpeg"},
 
-            "SSCC":{"extra":"SSCC",
-            "explain":"싱글오리진 원두에, 달콤한 맛의 콜롬비아산 커피를 커피메이커로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/3.png"},
+            "SSCC":{"abbr":"SSCC", "recommend":"싱달콜커",
+            "explain":"싱글오리진 원두에,<br> 달콤한 맛의<br> 콜롬비아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/3.png"},
 
-            "SSCE":{"extra":"SSCE",
-            "explain":"싱글오리진 원두에, 달콤한 맛의 에티오피아산 커피를 커피메이커로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/4.png"},
+            "SSCE":{"abbr":"SSCE", "recommend":"싱달에커",
+            "explain":"싱글오리진 원두에,<br> 달콤한 맛의<br> 에티오피아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/4.png"},
 
-            "SBHC":{"extra":"SBHC",
-            "explain":"싱글오리진 원두에, 쌉쌀한 맛의 콜롬비아산 커피를 핸드드립으로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/5.png"},
+            "SBHC":{"abbr":"SBHC", "recommend":"싱쌉콜핸",
+            "explain":"싱글오리진 원두에,<br> 쌉쌀한 맛의<br> 콜롬비아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/5.png"},
 
-            "SBHE":{"extra":"SBHE",
-            "explain":"싱글오리진 원두에, 쌉쌀한 맛의 에티오피아산 커피를 핸드드립으로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/6.png"},
+            "SBHE":{"abbr":"SBHE", "recommend":"싱쌉에핸",
+            "explain":"싱글오리진 원두에,<br> 쌉쌀한 맛의<br> 에티오피아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/6.jpeg"},
 
-            "SBCC":{"extra":"SBCC",
-            "explain":"싱글오리진 원두에, 쌉쌀한 맛의 콜롬비아산 커피를 커피메이커로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/7.png"},
+            "SBCC":{"abbr":"SBCC", "recommend":"싱쌉콜커",
+            "explain":"싱글오리진 원두에,<br> 쌉쌀한 맛의<br> 콜롬비아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/7.png"},
 
-            "SBCE":{"extra":"SBCE",
-            "explain":"싱글오리진 원두에, 쌉쌀한 맛의 에티오피아산 커피를 커피메이커로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/8.png"},
+            "SBCE":{"abbr":"SBCE", "recommend":"싱쌉에커",
+            "explain":"싱글오리진 원두에,<br> 쌉쌀한 맛의<br> 에티오피아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/8.png"},
 
-            "BSHC":{"extra":"BSHC",
-            "explain":"블렌드 원두에, 달콤한 맛의 콜롬비아산 커피를 핸드드립으로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/9.png"},
+            "BSHC":{"abbr":"BSHC", "recommend":"블달콜핸",
+            "explain":"블렌드 원두에,<br> 달콤한 맛의<br> 콜롬비아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/9.png"},
 
-            "BSHE":{"extra":"BSHE",
-            "explain":"블렌드 원두에, 달콤한 맛의 에티오피아산 커피를 핸드드립으로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/10.png"},
+            "BSHE":{"abbr":"BSHE", "recommend":"블달에핸",
+            "explain":"블렌드 원두에,<br> 달콤한 맛의<br> 에티오피아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/10.png"},
 
-            "BSCC":{"extra":"BSCC",
-            "explain":"블렌드 원두에, 달콤한 맛의 콜롬비아산 커피를 커피메이커로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/11.png"},
+            "BSCC":{"abbr":"BSCC", "recommend":"블달콜커",
+            "explain":"블렌드 원두에,<br> 달콤한 맛의<br> 콜롬비아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/11.png"},
 
-            "BSCE":{"extra":"BSCE",
-            "explain":"블렌드 원두에, 달콤한 맛의 에티오피아산 커피를 커피메이커로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/12.png"},
+            "BSCE":{"abbr":"BSCE", "recommend":"블달에커",
+            "explain":"블렌드 원두에,<br> 달콤한 맛의<br> 에티오피아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/12.jpeg"},
 
-            "BBHC":{"extra":"BBHC",
-            "explain":"블렌드 원두에, 쌉쌀한 맛의 콜롬비아산 커피를 핸드드립으로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/13.png"},
+            "BBHC":{"abbr":"BBHC", "recommend":"블쌉콜핸",
+            "explain":"블렌드 원두에,<br> 쌉쌀한 맛의<br> 콜롬비아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/13.jpeg"},
 
-            "BBHE":{"extra":"BBHE",
-            "explain":"블렌드 원두에, 쌉쌀한 맛의 에티오피아산 커피를 핸드드립으로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/14.png"},
+            "BBHE":{"abbr":"BBHE","recommend":"블쌉에핸",
+            "explain":"블렌드 원두에,<br> 쌉쌀한 맛의<br> 에티오피아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/14.png"},
 
-            "BBCC":{"extra":"BBCC",
-            "explain":"블렌드 원두에, 쌉쌀한 맛의 콜롬비아산 커피를 커피메이커로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/15.png"},
+            "BBCC":{"abbr":"BBCC","recommend":"블쌉콜커",
+            "explain":"블렌드 원두에,<br> 쌉쌀한 맛의<br> 콜롬비아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/15.png"},
 
-            "BBCE":{"extra":"BBCE",
-            "explain":"블렌드 원두에, 쌉쌀한 맛의 에티오피아산 커피를 커피메이커로 마시고 싶으시군요~ :)","img":"https://rightmemory1999.github.io/images/findTaste/16.png"},
+            "BBCE":{"abbr":"BBCE","recommend":"블쌉에커",
+            "explain":"블렌드 원두에,<br> 쌉쌀한 맛의<br> 에티오피아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/16.png"}
 
         };
 
@@ -109,17 +109,19 @@
             next();
         };
 
+
         function next(){
             if(num==5){
                 $(".question").hide();
                 $(".result").show();
                 var yourCoffee="";
-                ($("#coffeeBean").val() < 2) ? yourCoffee+="S" : yourCoffee+="B";
-                ($("#coffeeTaste").val() < 2) ? yourCoffee+="S" : yourCoffee+="B";
-                ($("#extraction").val() < 2) ? yourCoffee+="H" : yourCoffee+="C";
-                ($("#origin").val() < 2) ? yourCoffee+="C" : yourCoffee+="E";
+                ($("#coffeeBean").val() == 1) ? yourCoffee+="S" : yourCoffee+="B";
+                ($("#coffeeTaste").val() == 1) ? yourCoffee+="S" : yourCoffee+="B";
+                ($("#extraction").val() == 1) ? yourCoffee+="H" : yourCoffee+="C";
+                ($("#origin").val() == 1) ? yourCoffee+="C" : yourCoffee+="E";
                 $("#img").attr("src",result[yourCoffee]["img"]);
-                $("#extra_animal").html(result[yourCoffee]["extra"]);
+                $("#abbr").html(result[yourCoffee]["abbr"]);
+                $("#recommend").html(result[yourCoffee]["recommend"]);
                 $("#explain").html(result[yourCoffee]["explain"]);
             }else{
                 $(".progress-bar").attr('style','width: calc(100/4*'+num+'%);');
@@ -165,31 +167,59 @@
                                 </div><!-- end row -->
 
                                 <div class="row justify-content-center">
-                                    <div class="col-9 col-md-6 col-lg-4 mb-3 mb-md-0">
+                                    <div class="col-11 col-md-10">
                                         <article class="question">
                                             <div class="progress mt-5">
                                                 <div class="progress-bar" role="progressbar" style="width: calc(100/4*1%);" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-                                            <h2 id="title" class="text-center mt-5" style="font-weight: 400;">질문<br></h2>
+                                            <h2 id="title" class="text-center mt-10" style="font-weight: 400;">질문<br></h2>
                                             <hr class="horizon_line">
                                             <input id="type" type="hidden" value="coffeeBean">
-                                            <button id="A" type="button" class="btn mt-5" onclick='aButton();'>Primary</button>
-                                            <button id="B" type="button" class="btn mt-5" onclick='bButton();'>Primary</button>
+                                            <button id="A" type="button" class="btn btn-minimalis-dark btn-arrow" onclick='aButton();'>
+                                                <span class="inner-btn"/>Primary<span class="arrow"/>
+                                            </button>
+                                            <button id="B" type="button" class="btn btn-minimalis-dark btn-arrow" onclick='bButton();'>
+                                                <span class="inner-btn"/>Primary<span class="arrow"/>
+                                            </button>
                                             <!-- btn-primary -->
                                         </article>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
 
                                 <div class="row justify-content-center">
-                                    <div class="col-9 col-md-6 col-lg-4 mb-3 mb-md-0">
+                                    <div class="col-11 col-md-10">
                                         <article class="result">
-                                            <h1 id="extra_animal" class="text-center" style="font-weight: 400; font-size: medium;">동물 설명</h1>
-                                            <h2 id="animal" class="text-center" style="font-weight: 900; font-size: 30px;"><b>동물 이름</b></h2>
+                                            <img id="img" th:src="@{/assets/img/main_desktop.jpeg}" alt="yourCoffee">
+                                            <h1 id="abbr" class="font-weight-normal text-dark font-size-display5 font-size-md-display4 font-family-unna">별다줄</h1>
+                                            <h2 id="recommend" class="font-weight-normal text-light font-size-display3 font-size-md-display2 font-family-unna mb-4 mb-md-6"><b>커피 결과</b></h2>
                                             <br>
-                                            <h3 id="explain" class="mt-5 box" style="font-weight: 300; font-size: medium;">설명</h3>
+                                            <h3 id="explain" class="font-weight-normal text-light font-size-display6 font-size-md-display6 font-family-unna">설명</h3>
+                                            <br>
+                                            <h5 class="font-weight-normal text-light font-size-display6 font-size-md-display6 font-family-unna"> &#128077; 추천 커피를 확인해보세요</h5>
+                                            <br>
+
+
+                                            <!--선택한 항목 변수로 받은, 추천 커피들-->
+
+
+                                            <div class="container-lg container-fluid">
+                                                <div class="row mt-25px">
+                                                    <div class="col-sm-12 text-center">
+                                                        <button type="button" class="btn btn-minimalis-dark btn-arrow">
+                                                            <span class="inner-btn"><a href="/shop">모든 커피 보기</a><span class="arrow">
+                                                                    <span class="arrow-icon"></span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div><!-- end col -->
+                                                </div><!-- end row -->
+                                            </div>
+
                                         </article>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
+
+
 
                                 <!-- mbti 검사 점수 -->
                                 <input type="hidden" id="coffeeBean" value="0">
