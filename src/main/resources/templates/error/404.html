@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate="~{layouts/layout1}"
+      lang="kr">
+
+<div layout:fragment="content">
+
+<section class="fullscreen bg-white bg-between-bottom bg-img-md-none" style="background-image: url(../assets/img/leaf_left.png), url(../assets/img/leaf_right.png);">
+    <div class="container-fluid px-0">
+        <div class="position-relative">
+            <div class="container-lg container-fluid">
+                <div class="row align-items-center justify-content-center text-center vh-100">
+                    <div class="col-12 col-md-10 col-lg-8 py-8">
+                        <img class="img-fluid mb-20px" src="../assets/img/error-404.png" alt="error 404" />
+
+                        <h1 class="font-weight-medium font-size-h3 font-size-md-h1 mb-10px mb-md-3">Whoops, that page is gone</h1>
+                        <p class="lead mb-20px">The page you’re looking for isn’t available.</p>
+
+                        <a href="/" class="btn btn-minimalis-dark btn-arrow">
+                            <div class="inner-btn">
+                                Return Home
+                                <div class="arrow">
+                                    <span class="arrow-icon"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end position-relative -->
+    </div><!-- end container-fluid -->
+</section>
+
+</div>
+
+</html>
