@@ -47,7 +47,7 @@ public class ReplyController {
             model.addAttribute("errorMessage", "리뷰 등록 중 에러가 발생하였습니다.");
             return "reply/replyForm";
         }
-        return "reply/replyForm";
+        return "redirect:/item/{itemId}";
     }
 
     @GetMapping(value = "/item/{itemId}/reply/{replyId}")

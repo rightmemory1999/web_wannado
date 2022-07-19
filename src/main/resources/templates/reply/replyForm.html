@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--      layout:decorate="~{layouts/layout1}">-->
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -34,7 +34,7 @@
   </style>
 </th:block>
 
-<div layout:fragment="content">
+<div th:fragment="replyForm">
   <div style="padding: 1rem">
     <form role="form" method="post" th:object="${replyFormDto}">
 
