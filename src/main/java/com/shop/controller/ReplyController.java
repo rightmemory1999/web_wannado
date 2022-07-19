@@ -1,8 +1,14 @@
 package com.shop.controller;
 
 import com.shop.dto.ReplyFormDto;
+import com.shop.dto.ReplySearchDto;
+import com.shop.entity.Reply;
 import com.shop.service.ReplyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -74,6 +81,23 @@ public class ReplyController {
             return "reply/replyForm";
         }
         return "reply/replyForm";
+
+    }
+
+    @GetMapping(value = {"/item/{itemId}/replyList", "/item/{itemId}/replyList/{page}"})
+    public String replyList(ReplySearchDto replySearchDto,
+                            @PathVariable("itemId")Long itemId,
+                            @PathVariable("page") Optional<Integer> page,
+                            Model model) {
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Page<Reply> replyPage = replyService.replyPage(replySearchDto, pageable);
+
+        model.addAttribute("replyPage", replyPage);
+        model.addAttribute("replySearchDto", replySearchDto);
+        model.addAttribute("maxPage", 5);
+
+        return "reply/replyList";
 
     }
 }
