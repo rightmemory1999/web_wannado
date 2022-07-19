@@ -45,6 +45,18 @@ public class MainController {
         return "item/itemList";
     }
 
+    @GetMapping(value = "/quiz2")
+    public String quiz2(){
+
+        return "item/quiz2";
+    }
+
+    @GetMapping(value = "/quiz")
+    public String quiz(){
+
+        return "item/quiz";
+    }
+
     /*@GetMapping(value = "/search")
     public String search(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
 

@@ -67,8 +67,15 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     private BooleanExpression searchTasteLike(String searchTaste){
-
         return StringUtils.isEmpty(searchTaste) ? null : QItem.item.coffeeTaste.like("%" + searchTaste + "%");
+    }
+
+    private BooleanExpression searchExtractionLike(String searchExtraction){
+        return StringUtils.isEmpty(searchExtraction) ? null : QItem.item.extraction.like("%" + searchExtraction + "%");
+    }
+
+    private BooleanExpression searchOriginLike(String searchOrigin){
+        return StringUtils.isEmpty(searchOrigin) ? null : QItem.item.origin.like("%" + searchOrigin + "%");
     }
 
     @Override
@@ -120,7 +127,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .where(itemImg.frontImgYn.eq("Y"),
                         itemNmLike(itemSearchDto.getSearchQuery()),
                         searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
-                        searchTasteLike(itemSearchDto.getSearchTaste()))
+                        searchTasteLike(itemSearchDto.getSearchTaste()),
+                        searchExtractionLike(itemSearchDto.getSearchExtraction()),
+                        searchOriginLike(itemSearchDto.getSearchOrigin()))
                 .orderBy(item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -133,7 +142,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .where(itemImg.frontImgYn.eq("Y"),
                         itemNmLike(itemSearchDto.getSearchQuery()),
                         searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
-                        searchTasteLike(itemSearchDto.getSearchTaste()))
+                        searchTasteLike(itemSearchDto.getSearchTaste()),
+                        searchExtractionLike(itemSearchDto.getSearchExtraction()),
+                        searchOriginLike(itemSearchDto.getSearchOrigin()))
                 .fetchOne()
                 ;
 
@@ -141,7 +152,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     /*@Override
-    public Page<MainItemDto> searchByCoffeeBeanPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+    public Page<MainItemDto> searchByCoffeePropPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         QItem item = QItem.item;
         QItemImg itemImg = QItemImg.itemImg;
 

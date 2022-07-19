@@ -17,6 +17,10 @@ public class ItemSearchDto {
 
     private String searchTaste;    // 맛과향 : 달콤, 쌉쌀, 깔끔한, 밸런스 ...
 
+    private String searchExtraction;  // 추출방식
+    
+    private String searchOrigin;  // 원산지
+
     private String searchBy;    // 조회 유형 : itemNm, createBy
 
     private String searchQuery = "";    // 조회할 검색어를 저장할 변수, searchBy 에 따라 기준이 바뀜
