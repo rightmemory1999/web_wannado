@@ -11,10 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.PrintWriter;
 
 @RequestMapping("/members")
 @Controller
@@ -43,18 +41,10 @@ public class MemberController {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
-        return "redirect:/members/new/check";
+        model.addAttribute("msg","success");
+        return "member/memberForm";
     }
 
-    @GetMapping("/new/check")
-    public void newCheck(HttpServletResponse response) throws Exception{
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script>"+"alert('회원 가입을 축하드립니다.');"+"location.href='/'"+"</script>");
-        printWriter.flush();
-    }
-    
     @GetMapping("/login")
     public String loginMember() {
         return "/member/memberLoginForm";
@@ -72,18 +62,10 @@ public class MemberController {
         return "member/memberUpdateForm";
     }
     @PostMapping("/update")
-    public String updateUser(@Valid MemberFormDto memberFormDto){
+    public String updateUser(@Valid MemberFormDto memberFormDto,Model model){
         memberService.updateMember(memberFormDto);
-        return "redirect:/members/update/check";
-    }
-
-    @GetMapping("/update/check")
-    public void updateCheck(HttpServletResponse response) throws Exception{
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println("<script>"+"alert('회원 수정하셨습니다.');"+"location.href='/'"+"</script>");
-        printWriter.flush();
+        model.addAttribute("msgU","updateCom");
+        return "member/memberUpdateForm";
     }
 
     @GetMapping("/delete")
