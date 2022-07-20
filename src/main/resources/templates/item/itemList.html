@@ -10,6 +10,7 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
+
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script th:inline="javascript">
@@ -67,9 +68,15 @@
         });
 
         function page(page){
-            var searchCoffeeBean = ${"#searchCoffeeBean"}.val();
+            var searchCoffeeBean = $("#searchCoffeeBean").val();
+            var searchTaste = $("#searchTaste").val();
+            var searchExtraction = $("#searchExtraction").val();
+            var searchOrigin = $("#searchOrigin").val();
 
-            location.href="/shop/" + "?searchCoffeeBean=" + searchCoffeeBean;
+            location.href="/shop/" + "?searchCoffeeBean=" + searchCoffeeBean
+                + "&searchTaste=" + searchTaste
+                + "&searchExtraction=" + searchExtraction
+                + "&searchOrigin=" + searchOrigin;
         }
 
     </script>
@@ -104,22 +111,24 @@
             <div class="row">
 
                 <!-- start sidebar -->
-                <div class="col-12 col-lg-3 d-none d-lg-block">
+                <div class="col-12 col-lg-3 d-none d-lg-block" th:object="${itemSearchDto}">
 
+                    <div class="widgets mb-5">
+                        <h3 class="font-weight-bolder text-primary mb-0 mb-lg-3">내가 원하는 원두</h3>
+                    </div>
 
-                    <div class="widgets mb-3" th:object="${itemSearchDto}">
-                        <h4 class="font-weight-bolder mb-4">원두 찾기</h4>
+                    <!--원두-->
+                    <div class="widgets mb-3">
+                        <h4 class="font-weight-bolder mb-4">원두</h4>
 
                         <div class="form-group mb-3">
-                            <select th:field="*{searchCoffeeBean}" class="form-control" style="width:auto;">
+                            <select th:field="*{searchCoffeeBean}" class="form-control borderRound" style="width:auto;">
                                 <option value="">전체</option>
                                 <option value="DECAFFEIN">디카페인</option>
                                 <option value="SINGLE_ORIGIN">싱글오리진</option>
                                 <option value="BLEND">블렌드</option>
                             </select>
                         </div>
-                        <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
-
                     </div><!-- end widgets -->
 
                     <hr class="my-4" />
@@ -128,181 +137,57 @@
                     <div class="widgets mb-3">
                         <h4 class="font-weight-bolder mb-4">맛과 향</h4>
 
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorBlack">
-                                    <label for="colorBlack">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:#1E1E1E; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">스모키</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mb-3 mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorBrass">
-                                    <label for="colorBrass">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:#ECAF4F; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">달콤한</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mb-3 mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorGold">
-                                    <label for="colorGold">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:#D6AF26; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">견과류</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mb-3 mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorGreen">
-                                    <label for="colorGreen">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:green; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">허브</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mb-3 mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorBronze">
-                                    <label for="colorBronze">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:#957144; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">초콜릿</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mb-3 mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorWhite">
-                                    <label for="colorWhite">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:#FFFFFF; border: 1px solid #979797; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">깔끔한</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mb-3 mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorYellow">
-                                    <label for="colorYellow">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:yellow; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">상큼한</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mb-3 mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorDarkRed">
-                                    <label for="colorDarkRed">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:darkred; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">과일</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-
-                            <div class="col-4">
-                                <div class="custom-checkbox filter-checkbox d-inline-block mb-3 mr-2">
-                                    <input type="checkbox" class="custom-control-input" id="colorCoral">
-                                    <label for="colorCoral">
-                                            <span class="custom-control-label d-inline-block text-center">
-                                                <span class="color-filter rounded-circle" style="background-color:coral; width: 30px; height: 30px;"></span>
-                                            </span>
-                                        <span class="d-block font-weight-normal text-secondary">꽃향기</span>
-                                    </label>
-                                </div>
-                            </div><!-- end col -->
-                        </div><!-- end row -->
+                        <div class="form-group mb-3">
+                            <select th:field="*{searchTaste}" class="form-control borderRound" style="width:auto;">
+                                <option value="">전체</option>
+                                <option value="달콤">달콤</option>
+                                <option value="고소">고소</option>
+                                <option value="쌉쌀">쌉쌀</option>
+                                <option value="밸런스">밸런스</option>
+                                <option value="깔끔한">깔끔한</option>
+                                <option value="부드러운">부드러운</option>
+                            </select>
+                        </div>
                     </div><!-- end widgets -->
 
                     <hr class="my-4" />
 
+                    <!-- 추출방식 -->
                     <div class="widgets mb-3">
-                        <h4 class="font-weight-bolder mb-4">로스팅 포인트</h4>
+                        <h4 class="font-weight-bolder mb-4">추출 방식</h4>
 
                         <div class="form-group mb-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="category1">
-                                <label class="custom-control-label" for="category1">라이트</label>
-                            </div>
+                            <select th:field="*{searchExtraction}" class="form-control borderRound" style="width:auto;">
+                                <option value="">전체</option>
+                                <option value="핸드드립">핸드드립</option>
+                                <option value="에스프레소머신">에스프레소머신</option>
+                                <option value="커피메이커">커피메이커</option>
+                            </select>
                         </div>
-
-                        <div class="form-group mb-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input rounded-0" id="category2">
-                                <label class="custom-control-label" for="category2">라이트 미디엄</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input rounded-0" id="category3">
-                                <label class="custom-control-label" for="category3">미디엄</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input rounded-0" id="category4">
-                                <label class="custom-control-label" for="category4">미디엄 다크</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input rounded-0" id="category5">
-                                <label class="custom-control-label" for="category5">다크</label>
-                            </div>
-                        </div>
-
                     </div><!-- end widgets -->
 
                     <hr class="my-4" />
 
+                    <!-- 원산지 -->
                     <div class="widgets mb-3">
-                        <h4 class="font-weight-bolder mb-4">Price</h4>
+                        <h4 class="font-weight-bolder mb-4">원산지</h4>
 
-                        <form method="post" class="price-range" data-start-min="10000" data-start-max="25000" data-min="5000" data-max="50000" data-step="1000">
-                            <div class="ui-range-slider mb-3"></div>
-
-                            <div class="d-flex justify-content-between ui-range-values">
-                                <div class="flex-grow-1 ui-range-value-min">
-                                    <h6 class="font-weight-normal">From: </h6><h5 class="font-weight-bold"><span></span>원</h5>
-                                    <input type="hidden">
-                                </div>
-                                <div class="ui-range-value-max">
-                                    <h6 class="font-weight-normal">To: </h6><h5 class="font-weight-bold"><span></span>원</h5>
-                                    <input type="hidden">
-                                </div>
-                            </div>
-                        </form>
+                        <div class="form-group mb-3">
+                            <select th:field="*{searchOrigin}" class="form-control borderRound" style="width:auto;">
+                                <option value="">전체</option>
+                                <option value="콜롬비아">콜롬비아</option>
+                                <option value="에티오피아">에티오피아</option>
+                                <option value="과테말라">과테말라</option>
+                                <option value="브라질">브라질</option>
+                                <option value="페루">페루</option>
+                                <option value="파나마">파나마</option>
+                            </select>
+                        </div>
                     </div><!-- end widgets -->
 
+                    <hr class="my-4" />
 
+                    <button id="searchBtn" type="submit" class="btn btn-primary borderRound">검색</button>
                 </div><!-- end col -->
 
                 <!-- start content -->
@@ -326,9 +211,9 @@
                                             </span>
                                         </button>
 
-                                        <span class="card-action action-top action-left">
-                                            <span class="badge badge-primary rounded-lg font-weight-bold text-uppercase px-3 py-2">[*NEW*]</span>
-                                        </span>
+<!--                                        <span class="card-action action-top action-left">-->
+<!--                                            <span class="badge badge-primary rounded-lg font-weight-bold text-uppercase px-3 py-2">[*NEW*]</span>-->
+<!--                                        </span>-->
                                         <!--                                    <span class="card-action action-top action-left">-->
                                         <!--                                            <span class="badge badge-danger rounded-0 font-weight-bold text-uppercase px-3 py-2">-30%</span>-->
                                         <!--                                        </span>-->

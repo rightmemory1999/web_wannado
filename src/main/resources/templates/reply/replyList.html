@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--      layout:decorate="~{layouts/layout1}">-->
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        $(document).ready(function(){
+            $("#searchBtn").on("click",function(e) {
+                e.preventDefault();
+                page(0);
+            });
+        });
+
+        function page(page){
+            var searchReplyBy = $("#searchReplyBy").val();
+            var searchReplyQuery = $("#searchReplyQuery").val();
+            var itemId = $("#itemId").val();
+
+            location.href="/item/" + itemId + "/replyList/" + page
+                + "?searchReplyBy=" + searchReplyBy
+                + "&searchReplyQuery=" + searchReplyQuery;
+        }
+
+    </script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        select{
+            margin-right:10px;
+        }
+    </style>
+</th:block>
+
+<div th:fragment="replyList">
+
+    <div style="padding: 1rem">
+
+        <form th:action="@{'/item/' + ${itemId} + '/replyList/' + ${replyPage.number}}" role="form" method="get" th:object="${replyPage}">
+
+<!--            <div th:each="reply, status: ${replyPage.getContent()}">-->
+                <p class="h3">
+                    테이스팅 노트
+<!--                    (<span th:text="${replyPage.getContent()}" />)-->
+                </p>
+<!--            </div>-->
+            <input type="hidden" th:value="${itemId}" id="itemId">
+
+            <table class="table">
+                <thead>
+                <tr>
+<!--                    <td>제품이름</td>-->
+<!--                    <td>리뷰번호</td>-->
+                    <td>별점</td>
+                    <td>후기</td>
+                    <td>작성자</td>
+<!--                    <td>제품아이디</td>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="reply, status: ${replyPage.getContent()}">
+<!--                    <td th:text="${reply.item.itemNm}"></td>-->
+<!--                    <td th:text="${reply.id}"></td>-->
+                    <td th:text="${reply.star}"></td>
+                    <td th:text="${reply.replyContent}"></td>
+                    <td th:text="${reply.createdBy}"></td>
+<!--                    <td th:text="${reply.item.id}"></td>-->
+                </tr>
+                </tbody>
+            </table>
+
+<!--            <div th:with="start=${(replyPage.number/maxPage)*maxPage + 1}, end=(${(replyPage.totalPages == 0) ? 1 : (start + (maxPage - 1) < replyPage.totalPages ? start + (maxPage - 1) : replyPage.totalPages)})" >-->
+<!--                <ul class="pagination justify-content-center">-->
+
+<!--                    <li class="page-item" th:classappend="${replyPage.first}?'disabled'">-->
+<!--                        <a th:onclick="'javascript:page(' + ${replyPage.number - 1} + ')'" aria-label='Previous' class="page-link">-->
+<!--                            <span aria-hidden='true'>Previous</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${replyPage.number eq page-1}?'active':''">-->
+<!--                        <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>-->
+<!--                    </li>-->
+
+<!--                    <li class="page-item" th:classappend="${replyPage.last}?'disabled'">-->
+<!--                        <a th:onclick="'javascript:page(' + ${replyPage.number + 1} + ')'" aria-label='Next' class="page-link">-->
+<!--                            <span aria-hidden='true'>Next</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                </ul>-->
+<!--            </div>-->
+
+<!--            <div class="form-inline justify-content-center" th:object="${replySearchDto}">-->
+
+<!--                <input type="hidden" value="itemId" th:field="*{searchReplyBy}" class="form-control" style="width:auto;">-->
+<!--                <input type="number" th:value=2 th:field="*{searchReplyQuery}" class="form-control" placeholder="검색어를 입력해주세요">-->
+<!--                <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>-->
+<!--            </div>-->
+        </form>
+    </div>
+
+</div>
+
+</html>

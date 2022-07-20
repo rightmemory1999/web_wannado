@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--      layout:decorate="~{layouts/layout1}">-->
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    $(document).ready(function(){
+      var errorMessage = [[${errorMessage}]];
+      if(errorMessage != null){
+        alert(errorMessage);
+      }
+    });
+  </script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+    .input-group {
+      margin-bottom : 15px
+    }
+    .img-div {
+      margin-bottom : 10px
+    }
+    .fieldError {
+      color: #bd2130;
+    }
+  </style>
+</th:block>
+
+<div th:fragment="replyForm">
+
+  <div style="padding: 1rem">
+    <form role="form" method="post" th:object="${replyFormDto}">
+
+      <p class="h3">
+        커피를 마신 후 느낌을 적어주세요.
+      </p>
+
+      <hr />
+
+      <input type="hidden" th:field="*{id}">
+
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text borderRound">제품번호</span>
+        </div>
+        <input type="number" th:value="${itemId}" class="form-control borderRound" placeholder="제품번호" disabled="disabled">
+      </div>
+      <p th:if="${#fields.hasErrors('itemId')}" th:errors="*{itemId}" class="fieldError">Incorrect data</p>
+
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text borderRound">별점</span>
+        </div>
+        <select th:field="*{star}" class="custom-select borderRound">
+          <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+          <option value="4">⭐️⭐️⭐️⭐️</option>
+          <option value="3">⭐️⭐️⭐️</option>
+          <option value="2">⭐️⭐️</option>
+          <option value="1">⭐️</option>
+        </select>
+      </div>
+      <p th:if="${#fields.hasErrors('star')}" th:errors="*{star}" class="fieldError">Incorrect data</p>
+
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text borderRound">노트</span>
+        </div>
+        <textarea type="text" th:field="*{replyContent}" class="form-control borderRound" placeholder="커피의 맛과 향은 어땠나요?"></textarea>
+      </div>
+      <p th:if="${#fields.hasErrors('replyContent')}" th:errors="*{replyContent}" class="fieldError">Incorrect data</p>
+
+
+      <div th:if="${#strings.isEmpty(replyFormDto.id)}" style="text-align: center">
+        <button th:formaction="@{'/item/' + ${itemId} + '/reply/new'}" type="submit" class="btn btn-primary borderRound">저장</button>
+      </div>
+      <div th:unless="${#strings.isEmpty(replyFormDto.id)}" style="text-align: center">
+        <button th:formaction="@{'/item/' + ${itemId} + '/reply/' + ${replyFormDto.id} }" type="submit" class="btn btn-primary borderRound">수정</button>
+      </div>
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+    </form>
+  </div>
+</div>
+
+</html>

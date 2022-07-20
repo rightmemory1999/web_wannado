@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate="~{layouts/layout1}"
+      lang="kr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 커피 찾기</title>
+    <!--<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">-->
+</head>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            $(".question").hide();
+            $(".result").hide();
+
+            calculateToalPrice();
+
+            $("#count").change( function(){
+                calculateToalPrice();
+            });
+        });
+
+        var num=1;
+        var q={
+            1: {"title": "어떤 원두를 원하세요?", "type": "coffeeBean", "A":"싱글오리진", "B":"블렌드"},
+            2: {"title": "선호하는 맛/향은?", "type": "coffeeTaste", "A":"달콤", "B":"쌉쌀"},
+            3: {"title": "어떤 추출방법을 원하세요?", "type": "extraction", "A":"핸드드립", "B":"커피메이커"},
+            4: {"title": "선호하는 원산지는?", "type": "origin", "A":"콜롬비아", "B":"에티오피아"}
+        };
+
+        var result={
+            "SSHC":{"abbr":"SSHC", "recommend":"싱달콜핸",
+            "explain":"싱글오리진 원두에,<br> 달콤한 맛의<br> 콜롬비아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/1.png"},
+
+            "SSHE":{"abbr":"SSHE", "recommend":"싱달에핸",
+            "explain":"싱글오리진 원두에,<br> 달콤한 맛의<br> 에티오피아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/2.jpeg"},
+
+            "SSCC":{"abbr":"SSCC", "recommend":"싱달콜커",
+            "explain":"싱글오리진 원두에,<br> 달콤한 맛의<br> 콜롬비아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/3.png"},
+
+            "SSCE":{"abbr":"SSCE", "recommend":"싱달에커",
+            "explain":"싱글오리진 원두에,<br> 달콤한 맛의<br> 에티오피아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/4.png"},
+
+            "SBHC":{"abbr":"SBHC", "recommend":"싱쌉콜핸",
+            "explain":"싱글오리진 원두에,<br> 쌉쌀한 맛의<br> 콜롬비아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/5.png"},
+
+            "SBHE":{"abbr":"SBHE", "recommend":"싱쌉에핸",
+            "explain":"싱글오리진 원두에,<br> 쌉쌀한 맛의<br> 에티오피아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/6.jpeg"},
+
+            "SBCC":{"abbr":"SBCC", "recommend":"싱쌉콜커",
+            "explain":"싱글오리진 원두에,<br> 쌉쌀한 맛의<br> 콜롬비아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/7.png"},
+
+            "SBCE":{"abbr":"SBCE", "recommend":"싱쌉에커",
+            "explain":"싱글오리진 원두에,<br> 쌉쌀한 맛의<br> 에티오피아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/8.png"},
+
+            "BSHC":{"abbr":"BSHC", "recommend":"블달콜핸",
+            "explain":"블렌드 원두에,<br> 달콤한 맛의<br> 콜롬비아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/9.png"},
+
+            "BSHE":{"abbr":"BSHE", "recommend":"블달에핸",
+            "explain":"블렌드 원두에,<br> 달콤한 맛의<br> 에티오피아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/10.png"},
+
+            "BSCC":{"abbr":"BSCC", "recommend":"블달콜커",
+            "explain":"블렌드 원두에,<br> 달콤한 맛의<br> 콜롬비아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/11.png"},
+
+            "BSCE":{"abbr":"BSCE", "recommend":"블달에커",
+            "explain":"블렌드 원두에,<br> 달콤한 맛의<br> 에티오피아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/12.jpeg"},
+
+            "BBHC":{"abbr":"BBHC", "recommend":"블쌉콜핸",
+            "explain":"블렌드 원두에,<br> 쌉쌀한 맛의<br> 콜롬비아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/13.jpeg"},
+
+            "BBHE":{"abbr":"BBHE","recommend":"블쌉에핸",
+            "explain":"블렌드 원두에,<br> 쌉쌀한 맛의<br> 에티오피아산 커피를<br> 핸드드립으로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/14.png"},
+
+            "BBCC":{"abbr":"BBCC","recommend":"블쌉콜커",
+            "explain":"블렌드 원두에,<br> 쌉쌀한 맛의<br> 콜롬비아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/15.png"},
+
+            "BBCE":{"abbr":"BBCE","recommend":"블쌉에커",
+            "explain":"블렌드 원두에,<br> 쌉쌀한 맛의<br> 에티오피아산 커피를<br> 커피메이커로 마시고 싶으시군요~ :)","img":"assets/img/findTaste/16.png"}
+
+        };
+
+        function start(){
+            $(".start").hide();
+            //start 화면 사라지는거
+            $(".question").show();
+            //보여주기
+            next();
+        };
+
+        function aButton(){
+            var type=$("#type").val();
+            console.log(type);
+            var preValue=$("#"+type).val();
+            $("#"+type).val(parseInt(preValue)+1);
+            next();
+
+        };
+
+        function bButton(){
+            next();
+        };
+
+        function next(){
+            if(num==5){
+                $(".question").hide();
+                $(".result").show();
+
+                var yourCoffee="";
+                var searchCoffeeBean = "";
+                var searchTaste = "";
+                var searchExtraction = "";
+                var searchOrigin = "";
+
+                ($("#coffeeBean").val() == 1) ? yourCoffee+="S" : yourCoffee+="B";
+                ($("#coffeeBean").val() == 1) ? searchCoffeeBean="SINGLE_ORIGIN" : searchCoffeeBean="BLEND";
+
+                ($("#coffeeTaste").val() == 1) ? yourCoffee+="S" : yourCoffee+="B";
+                ($("#coffeeTaste").val() == 1) ? searchTaste="달콤" : searchTaste="쌉쌀";
+
+                ($("#extraction").val() == 1) ? yourCoffee+="H" : yourCoffee+="C";
+                ($("#extraction").val() == 1) ? searchExtraction="핸드드립" : searchExtraction="커피메이커";
+
+                ($("#origin").val() == 1) ? yourCoffee+="C" : yourCoffee+="E";
+                ($("#origin").val() == 1) ? searchOrigin="콜롬비아" : searchOrigin="에티오피아";
+
+                $("#img").attr("src",result[yourCoffee]["img"]);
+                $("#abbr").html(result[yourCoffee]["abbr"]);
+                $("#recommend").html(result[yourCoffee]["recommend"]);
+                $("#explain").html(result[yourCoffee]["explain"]);
+
+
+            }else{
+                $(".progress-bar").attr('style','width: calc(100/4*'+num+'%);');
+                $("#title").html(q[num]["title"]);
+                $("#type").val(q[num]["type"]);
+                $("#A").html(q[num]["A"]);
+                $("#B").html(q[num]["B"]);
+
+                num++;
+            }
+        }
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+
+    <!-- Javascript File -->
+    <script type="text/javascript" th:src="@{/assets/js/theme.js?cb=1609799846196}"></script>
+
+    <!-- start hero slider -->
+    <section class="hero-slider">
+        <img class="position-absolute d-none d-md-inline-block" style="top: 115px; left: -1.5rem; z-index: 9;" th:src="@{/assets/img/pattern-02.png}" alt="" />
+
+        <div class="swiper-container home-slider-2">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide bg-img-hero" th:style="'background-image: url('+@{/assets/img/main_desktop.jpeg}+');'">
+                    <div class="container-lg container-fluid">
+                        <div class="row home-slider-inner py-9 justify-content-center align-items-center text-center">
+                            <div class="col-md-11 col-lg-10 col-xl-9">
+                                <div class="row justify-content-center">
+                                    <div class="col-11 col-md-10">
+                                        <article class="start">
+                                            <h5 class="font-weight-normal text-light font-size-display5 font-size-md-display4 font-family-sans-serif mb-6 mb-md-12">'Wanna Do', <br/> 당신이 원하는 커피를 <br/> 찾으세요</h5>
+                                            <h3 class="font-weight-normal text-light font-size-display3 font-size-md-display2 font-family-sans-serif mb-4 mb-md-6">나의 커피 찾기</h3>
+                                            <button type="button" class="font-family-sans-serif d-inline-block btn btn-minimalis-outline-up-primary
+                                                    font-size-h2 border border-light rounded-circle mt-4 mt-lg-n4 p-0"
+                                                    style="line-height: 108px; width: 108px; height: 108px; min-width: 0;" onclick='start();'>
+                                                <h4 class="font-weight-normal text-light"> 시작 </h4>
+                                            </button>
+                                        </article><!-- end col -->
+                                    </div>
+                                </div><!-- end row -->
+
+                                <div class="row justify-content-center">
+                                    <div class="col-11 col-md-10">
+                                        <article class="question">
+                                            <div class="progress mt-5">
+                                                <div class="progress-bar" role="progressbar" style="width: calc(100/4*1%);" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <h2 id="title" class="text-center mt-10" style="font-weight: 400;">질문<br></h2>
+                                            <hr class="horizon_line">
+                                            <input id="type" type="hidden" value="coffeeBean">
+                                            <button id="A" type="button" class="btn btn-minimalis-dark btn-arrow" onclick='aButton();'>
+                                                <span class="inner-btn"/>Primary<span class="arrow"/>
+                                            </button>
+                                            <button id="B" type="button" class="btn btn-minimalis-dark btn-arrow" onclick='bButton();'>
+                                                <span class="inner-btn"/>Primary<span class="arrow"/>
+                                            </button>
+                                            <!-- btn-primary -->
+                                        </article>
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+
+                                <form th:action="@{'/quiz/'}" role="form" method="get" th:object="${items}">
+                                <div class="row justify-content-center">
+                                    <div class="col-11 col-md-10">
+                                        <article class="result">
+                                            <img id="img" th:src="@{/assets/img/main_desktop.jpeg}" alt="yourCoffee" class="borderRound">
+                                            <h1 id="abbr" class="font-weight-normal text-dark font-size-display5 font-size-md-display4 font-family-sans-serif">별다줄</h1>
+                                            <h2 id="recommend" class="font-weight-normal text-light font-size-display3 font-size-md-display2 font-family-sans-serif mb-4 mb-md-6"><b>커피 결과</b></h2>
+                                            <br>
+                                            <h3 id="explain" class="font-weight-normal text-light font-size-display6 font-size-md-display6 font-family-sans-serif">설명</h3>
+                                            <br>
+                                            <h5 class="font-weight-normal text-light font-size-display6 font-size-md-display6 font-family-sans-serif"> &#128077; 추천 커피를 확인해보세요</h5>
+                                            <br>
+
+
+                                            <!--선택한 항목 변수로 받은, 추천 커피들-->
+                                            <div class="col-12 ">
+                                                <div class="row">
+                                                    <div th:each="item, status: ${items.getContent()}"
+                                                         class="col-12 col-sm-6 col-md-4 col-lg-6 col-xl-4">
+                                                        <div class="card product-card-style border-0 bg-gray-200 borderRound">
+                                                            <div class="card-img overflow-hidden">
+                                                                <!-- Image -->
+                                                                <figure class="mb-0">
+                                                                    <img th:src="${item.imgUrl}" th:alt="${item.itemNm}">
+                                                                </figure>
+
+                                                                <!-- Action -->
+                                                                <button class="card-action hover-card-action action-top action-right" type="button">
+                                                                    <span class="like-product">
+                                                                        <i class="flaticon-like h3"></i>
+                                                                        <i class="flaticon-like-1 h3 after d-none"></i>
+                                                                    </span>
+                                                                </button>
+                                                            </div><!-- end card-img -->
+
+                                                            <div class="card-body">
+                                                                <div class="block-content text-center">
+                                                                    <h6 class="font-weight-normal text-uppercase mb-3">
+                                                                        [[${item.roasteryNm}]]</h6>
+                                                                    <h5 class="font-weight-bolder text-uppercase mb-3">
+                                                                        <a class="text-dark" th:href="'/item/' +${item.id}">[[${item.itemNm}]]</a>
+                                                                    </h5>
+                                                                    <p class="font-weight-normal">[[${item.price}]]원</p>
+
+                                                                    <div class="d-flex mt-4">
+                                                                        <div class="flex-grow-1 pl-1">
+                                                                            <button class="btn btn-outline-light btn-block font-weight-bolder borderRound">
+                                                                                <a class="text-dark" th:href="'/item/' +${item.id}">자세히 보기</a>
+                                                                            </button>
+                                                                        </div><!-- end col -->
+                                                                        <div class="pl-2 pr-1">
+                                                                            <a href="#" class="btn btn-outline-dark font-weight-bolder borderRound" style="min-width: 40px;" data-toggle="modal" data-target="#quickViewModal">
+                                                                                <i class="flaticon-visibility"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div><!-- end d-flex -->
+                                                                </div><!-- end block-content -->
+                                                            </div><!-- end card-body -->
+                                                        </div><!-- end card -->
+                                                    </div><!-- end col -->
+                                                </div>
+                                            </div>
+
+                                            <div class="container-lg container-fluid">
+                                                <div class="row mt-25px">
+                                                    <div class="col-sm-12 text-center">
+                                                        <button type="button" class="btn btn-minimalis-dark btn-arrow">
+                                                            <span class="inner-btn"><a href="/shop">모든 커피 보기</a><span class="arrow">
+                                                                    <span class="arrow-icon"></span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div><!-- end col -->
+                                                </div><!-- end row -->
+                                            </div>
+
+                                        </article>
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                                </form>
+
+
+
+                                <!-- mbti 검사 점수 -->
+                                <input type="hidden" id="coffeeBean" value="0">
+                                <input type="hidden" id="coffeeTaste" value="0">
+                                <input type="hidden" id="extraction" value="0">
+                                <input type="hidden" id="origin" value="0">
+
+                                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+                            </div><!-- end col -->
+                        </div><!-- end home-slider-inner -->
+                    </div><!-- end container -->
+                </div><!-- end swiper-slide -->
+            </div><!-- end swiper-wrapper -->
+        </div><!-- end swiper-container -->
+
+
+    </section>
+    <!-- end hero slider -->
+    <!-- start product section -->
+    <!-- end product section -->
+
+</div>
+
+</html>

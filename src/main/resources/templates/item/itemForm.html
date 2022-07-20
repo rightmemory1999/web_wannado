@@ -62,14 +62,14 @@
         <input type="hidden" th:field="*{id}">
 
         <div class="form-group">
-            <select th:field="*{itemSellStatus}" class="custom-select">
+            <select th:field="*{itemSellStatus}" class="custom-select borderRound">
                 <option value="SELL">판매중</option>
                 <option value="SOLD_OUT">품절</option>
             </select>
         </div>
 
         <div class="form-group">
-            <select th:field="*{coffeeBean}" class="custom-select">
+            <select th:field="*{coffeeBean}" class="custom-select borderRound">
                 <option value="DECAFFEIN">디카페인</option>
                 <option value="SINGLE_ORIGIN">싱글오리진</option>
                 <option value="BLEND">블렌드</option>
@@ -85,8 +85,8 @@
         <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
 
         <div class="form-group">
-            <select th:field="*{coffeeTaste}" class="custom-select">
-                <option value="" disabled selected>맛과향을 선택해주세요</option>
+            <select th:field="*{coffeeTaste}" class="custom-select borderRound">
+                <option value="" selected>맛과향을 선택해주세요</option>
                 <option value="달콤">달콤</option>
                 <option value="고소">고소</option>
                 <option value="쌉쌀">쌉쌀</option>
@@ -98,8 +98,8 @@
         <p th:if="${#fields.hasErrors('coffeeTaste')}" th:errors="*{coffeeTaste}" class="fieldError">Incorrect data</p>
 
         <div class="form-group">
-            <select th:field="*{extraction}" class="custom-select">
-                <option value="" disabled selected>잘 맞는 추출방법을 선택해주세요</option>
+            <select th:field="*{extraction}" class="custom-select borderRound">
+                <option value="" selected>잘 맞는 추출방법을 선택해주세요</option>
                 <option value="핸드드립">핸드드립</option>
                 <option value="에스프레소머신">에스프레소머신</option>
                 <option value="커피메이커">커피메이커</option>
@@ -108,8 +108,8 @@
         <p th:if="${#fields.hasErrors('extraction')}" th:errors="*{extraction}" class="fieldError">Incorrect data</p>
 
         <div class="form-group">
-            <select th:field="*{origin}" class="custom-select">
-                <option value="" disabled selected>원산지를 선택해주세요</option>
+            <select th:field="*{origin}" class="custom-select borderRound">
+                <option value="" selected>원산지를 선택해주세요</option>
                 <option value="콜롬비아">콜롬비아</option>
                 <option value="에티오피아">에티오피아</option>
                 <option value="과테말라">과테말라</option>
@@ -121,8 +121,8 @@
         <p th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}" class="fieldError">Incorrect data</p>
 
         <div class="form-group">
-            <select th:field="*{process}" class="custom-select">
-                <option value="" disabled selected>가공방식을 선택해주세요</option>
+            <select th:field="*{process}" class="custom-select borderRound">
+                <option value="" selected>가공방식을 선택해주세요</option>
                 <option value="워시드">워시드</option>
                 <option value="내추럴">내추럴</option>
                 <option value="펄프드내추럴">펄프드 내추럴</option>
@@ -134,8 +134,8 @@
         <p th:if="${#fields.hasErrors('process')}" th:errors="*{process}" class="fieldError">Incorrect data</p>
 
         <div class="form-group">
-            <select th:field="*{kind}" class="custom-select">
-                <option value="" disabled selected>품종을 선택해주세요</option>
+            <select th:field="*{kind}" class="custom-select borderRound">
+                <option value="" selected>품종을 선택해주세요</option>
                 <option value="아라비카">아라비카</option>
                 <option value="로부스타">로부스타</option>
                 <option value="코일로우">코일로우</option>
@@ -204,10 +204,10 @@
         </div>
 
         <div th:if="${#strings.isEmpty(itemFormDto.id)}" style="text-align: center">
-            <button th:formaction="@{/admin/item/new}" type="submit" class="btn btn-primary">저장</button>
+            <button th:formaction="@{/admin/item/new}" type="submit" class="btn btn-primary borderRound">저장</button>
         </div>
         <div th:unless="${#strings.isEmpty(itemFormDto.id)}" style="text-align: center">
-            <button th:formaction="@{'/admin/item/' + ${itemFormDto.id} }" type="submit" class="btn btn-primary">수정</button>
+            <button th:formaction="@{'/admin/item/' + ${itemFormDto.id} }" type="submit" class="btn btn-primary borderRound">수정</button>
         </div>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 

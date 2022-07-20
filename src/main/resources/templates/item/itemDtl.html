@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thyleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout1}">
 
 <head>
@@ -145,19 +146,6 @@
                                             <input type="hidden" th:value="${item.price}" id="price" name="price">
                                             <h3 class="font-weight-normal mb-0"><span th:text="${item.price}"></span>원</h3>
                                         </div><!-- end col -->
-                                        <div class="col text-right d-none d-sm-block">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item mr-4">
-                                                    <a href="#"><i class="flaticon-facebook text-dark text-hover-primary h4"></i></a>
-                                                </li>
-                                                <li class="list-inline-item mr-4">
-                                                    <a href="#"><i class="flaticon-pinterest text-dark text-hover-primary h4"></i></a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a href="#"><i class="flaticon-instagram text-dark text-hover-primary h4"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div><!-- end col -->
                                     </div><!-- end row -->
                                 </li><!-- end list-group-item -->
 
@@ -178,20 +166,6 @@
                                                     </div>
                                                 </div><!-- end input-group -->
                                             </div><!-- end qty-container -->
-                                        </div><!-- end col -->
-
-                                        <div class="col text-right d-block d-sm-none">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item mr-4">
-                                                    <a href="#"><i class="flaticon-facebook text-dark text-hover-primary h4"></i></a>
-                                                </li>
-                                                <li class="list-inline-item mr-4">
-                                                    <a href="#"><i class="flaticon-pinterest text-dark text-hover-primary h4"></i></a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a href="#"><i class="flaticon-instagram text-dark text-hover-primary h4"></i></a>
-                                                </li>
-                                            </ul>
                                         </div><!-- end col -->
                                     </div><!-- end row -->
                                 </li><!-- end list-group-item -->
@@ -252,6 +226,17 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-5">
+                                            <p class="text-uppercase mb-0">맛과 향:</p>
+                                        </div><!-- end col -->
+                                        <div class="col-7">
+                                            <p class="font-weight-medium text-uppercase mb-0" th:text="${item.coffeeTaste}"></p>
+                                        </div><!-- end col -->
+                                    </div><!-- end row -->
+                                </li><!-- end list-group-item -->
+
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-5">
                                             <p class="text-uppercase mb-0">잘 맞는 추출방법:</p>
                                         </div><!-- end col -->
                                         <div class="col-7">
@@ -299,7 +284,7 @@
                 <!-- 모바일 화면 끝 -->
 
                 <!-- 데스크탑 화면 시작 -->
-                <div class="col-lg-5 bg-white layer-white-before px-4 d-none d-lg-block">
+                <div class="col-lg-5 bg-white layer-white-before px-4 d-none d-lg-block" style="z-index: 1">
                     <div class="sticky-product-sidebar pt-25px pb-5">
                         <div class="row">
                             <div class="col-12">
@@ -324,24 +309,7 @@
                                             <div class="col">
                                                 <h3 class="font-weight-normal mb-0"><span th:text="${item.price}"></span>원</h3>
                                             </div><!-- end col -->
-                                            <div class="col text-right">
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item mr-4">
-                                                        <a href="#"><i class="flaticon-facebook text-dark text-hover-primary h4"></i></a>
-                                                    </li>
-                                                    <li class="list-inline-item mr-4">
-                                                        <a href="#"><i class="flaticon-pinterest text-dark text-hover-primary h4"></i></a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a href="#"><i class="flaticon-instagram text-dark text-hover-primary h4"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div><!-- end col -->
                                         </div><!-- end row -->
-                                    </li><!-- end list-group-item -->
-
-                                    <li class="list-group-item py-25px">
-                                        <h5 class="font-weight-normal mb-0">FREE 2-Day Shipping</h5>
                                     </li><!-- end list-group-item -->
 
                                     <!-- 주문 수량 조절 -->
@@ -386,6 +354,13 @@
                                     </div><!-- end col -->
                                 </div><!-- end row -->
 
+                                <div sec:authorize="isAuthenticated()">
+                                    <a th:href="@{'/item/' + ${itemId} + '/reply/new'}" rel="modal:open">테이스팅 노트 작성</a>
+                                </div>
+                                <div sec:authorize="isAuthenticated()">
+                                    <a th:href="@{'/item/' + ${itemId} + '/replyList/0?searchReplyBy=itemId&searchReplyQuery=' + ${itemId}}" rel="modal:open">테이스팅 노트 조회</a>
+                                </div>
+
                             </div><!-- end col -->
                         </div><!-- end row -->
                     </div><!-- end sticky-product-sidebar -->
@@ -396,138 +371,6 @@
         </div><!-- end container -->
     </section>
     <!-- end section -->
-
-    <!-- start review section -->
-    <section class="py-40px py-lg-6 bg-white border-top">
-        <div class="container-lg container-fluid">
-            <div class="row">
-                <div class="col-12 text-lg-center">
-                    <h2 class="mb-3 mb-lg-5">Customer Review</h2>
-                </div><!-- end col -->
-            </div><!-- end row -->
-
-            <div class="row justify-content-lg-center">
-                <div class="col-md-8 col-lg-6 text-lg-center">
-                    <h5 class="font-weight-bold mb-2">Andre</h5>
-
-                    <div class="rating mb-2">
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star"></i></label>
-                    </div><!-- end rating -->
-
-                    <p>Fast shipping and great quality of product, amazin color with golden gradient, truly love it.</p>
-                </div><!-- end col -->
-            </div><!-- end row -->
-
-            <hr class="border-top-0" />
-
-            <div class="row justify-content-lg-center">
-                <div class="col-md-8 col-lg-6 text-lg-center">
-                    <h5 class="font-weight-bold mb-2">Nicolo</h5>
-
-                    <div class="rating mb-2">
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                    </div><!-- end rating -->
-
-                    <p>The product is amazing, Shipping has lasted only 2 days as they mention on product information, amazing job Minimalis.</p>
-                </div><!-- end col -->
-            </div><!-- end row -->
-
-            <hr class="border-top-0" />
-
-            <div class="row justify-content-lg-center">
-                <div class="col-md-8 col-lg-6 text-lg-center">
-                    <h5 class="font-weight-bold mb-2">Jacob</h5>
-
-                    <div class="rating mb-2">
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                        <label><i class="flaticon-star text-primary"></i></label>
-                    </div><!-- end rating -->
-
-                    <p>Amazing product, I will absulutely comeback to buy another product for my home, good job Minimalis.</p>
-                </div><!-- end col -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </section>
-    <!-- end review section -->
-
-    <!-- start review section -->
-    <section class="py-40px py-lg-6 bg-white border-top">
-        <div class="container-lg container-fluid">
-            <div class="row justify-content-lg-center">
-                <div class="col-12 col-lg-8 text-lg-center">
-                    <h2 class="mb-3">Write a review</h2>
-
-                    <p class="lead mb-3">Be the first to review “Regular Fit V-Neck Sweater”</p>
-
-                    <form id="reviewForm" method="get" action="/">
-                        <div class="rate-star mb-4">
-                            <input type="radio" id="rat_star1" name="rat_rate" value="1" />
-                            <label for="rat_star1">
-                                <i class="flaticon-star"></i>
-                            </label>
-
-                            <input type="radio" id="rat_star2" name="rat_rate" value="2" />
-                            <label for="rat_star2">
-                                <i class="flaticon-star"></i>
-                            </label>
-
-                            <input type="radio" id="rat_star3" name="rat_rate" value="3" />
-                            <label for="rat_star3">
-                                <i class="flaticon-star"></i>
-                            </label>
-
-                            <input type="radio" id="rat_star4" name="rat_rate" value="4" />
-                            <label for="rat_star4">
-                                <i class="flaticon-star"></i>
-                            </label>
-
-                            <input type="radio" id="rat_star5" name="rat_rate" value="5" />
-                            <label for="rat_star5">
-                                <i class="flaticon-star"></i>
-                            </label>
-                        </div><!-- end rate-star -->
-
-                        <div class="row">
-                            <div class="form-group col-12 col-md-6 mb-4">
-                                <label class="d-block d-lg-none" for="cName">Name</label>
-                                <input type="text" class="form-control" id="cName" placeholder="Name" required>
-                            </div><!-- end form-group -->
-                            <div class="form-group col-12 col-md-6 mb-4">
-                                <label class="d-block d-lg-none" for="cEmail">Email</label>
-                                <input type="email" class="form-control" id="cEmail" placeholder="Email" required>
-                            </div><!-- end form-group -->
-                        </div><!-- end row -->
-                        <div class="form-group mb-5">
-                            <label class="d-block d-lg-none" for="cReview">Review</label>
-                            <textarea class="form-control" id="cReview" rows="5" placeholder="Write a review" required></textarea>
-                        </div><!-- end form-group -->
-                        <div class="form-group mb-0 text-right text-lg-center">
-                            <button type="submit" class="btn btn-minimalis-dark btn-arrow mb-2">
-                                    <span class="inner-btn">
-                                        Submit
-                                        <span class="arrow">
-                                            <span class="arrow-icon"></span>
-                                        </span>
-                                    </span>
-                            </button>
-                        </div><!-- end form-group -->
-                    </form>
-                </div><!-- end col -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </section>
-    <!-- end review section -->
 
     <!-- Javascript File -->
     <script type="text/javascript" th:src="@{/assets/js/theme.js?cb=1609799846196}"></script>
