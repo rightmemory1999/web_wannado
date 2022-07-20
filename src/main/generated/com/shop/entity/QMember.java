@@ -26,9 +26,15 @@ public class QMember extends EntityPathBase<Member> {
     //inherited
     public final StringPath createdBy = _super.createdBy;
 
+    public final StringPath detailAddress = createString("detailAddress");
+
     public final StringPath email = createString("email");
 
+    public final StringPath extraAddress = createString("extraAddress");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final BooleanPath isDeleted = createBoolean("isDeleted");
 
     //inherited
     public final StringPath modifiedBy = _super.modifiedBy;

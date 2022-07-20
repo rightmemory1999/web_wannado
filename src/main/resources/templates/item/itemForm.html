@@ -68,6 +68,14 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <select th:field="*{coffeeBean}" class="custom-select">
+                <option value="DECAFFEIN">디카페인</option>
+                <option value="SINGLE_ORIGIN">싱글오리진</option>
+                <option value="BLEND">블렌드</option>
+            </select>
+        </div>
+
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">상품명</span>
@@ -75,6 +83,66 @@
             <input type="text" th:field="*{itemNm}" class="form-control" placeholder="상품명을 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
+
+        <div class="form-group">
+            <select th:field="*{coffeeTaste}" class="custom-select">
+                <option value="" disabled selected>맛과향을 선택해주세요</option>
+                <option value="달콤">달콤</option>
+                <option value="고소">고소</option>
+                <option value="쌉쌀">쌉쌀</option>
+                <option value="밸런스">밸런스</option>
+                <option value="깔끔한">깔끔한</option>
+                <option value="부드러운">부드러운</option>
+            </select>
+        </div>
+        <p th:if="${#fields.hasErrors('coffeeTaste')}" th:errors="*{coffeeTaste}" class="fieldError">Incorrect data</p>
+
+        <div class="form-group">
+            <select th:field="*{extraction}" class="custom-select">
+                <option value="" disabled selected>잘 맞는 추출방법을 선택해주세요</option>
+                <option value="핸드드립">핸드드립</option>
+                <option value="에스프레소머신">에스프레소머신</option>
+                <option value="커피메이커">커피메이커</option>
+            </select>
+        </div>
+        <p th:if="${#fields.hasErrors('extraction')}" th:errors="*{extraction}" class="fieldError">Incorrect data</p>
+
+        <div class="form-group">
+            <select th:field="*{origin}" class="custom-select">
+                <option value="" disabled selected>원산지를 선택해주세요</option>
+                <option value="콜롬비아">콜롬비아</option>
+                <option value="에티오피아">에티오피아</option>
+                <option value="과테말라">과테말라</option>
+                <option value="브라질">브라질</option>
+                <option value="페루">페루</option>
+                <option value="파나마">파나마</option>
+            </select>
+        </div>
+        <p th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}" class="fieldError">Incorrect data</p>
+
+        <div class="form-group">
+            <select th:field="*{process}" class="custom-select">
+                <option value="" disabled selected>가공방식을 선택해주세요</option>
+                <option value="워시드">워시드</option>
+                <option value="내추럴">내추럴</option>
+                <option value="펄프드내추럴">펄프드 내추럴</option>
+                <option value="허니">허니</option>
+                <option value="무산소발효">무산소 발효</option>
+                <option value="웻훌링">웻훌링</option>
+            </select>
+        </div>
+        <p th:if="${#fields.hasErrors('process')}" th:errors="*{process}" class="fieldError">Incorrect data</p>
+
+        <div class="form-group">
+            <select th:field="*{kind}" class="custom-select">
+                <option value="" disabled selected>품종을 선택해주세요</option>
+                <option value="아라비카">아라비카</option>
+                <option value="로부스타">로부스타</option>
+                <option value="코일로우">코일로우</option>
+                <option value="리베리카">리베리카</option>
+            </select>
+        </div>
+        <p th:if="${#fields.hasErrors('kind')}" th:errors="*{kind}" class="fieldError">Incorrect data</p>
 
         <div class="input-group">
             <div class="input-group-prepend">
@@ -99,6 +167,22 @@
             <textarea class="form-control" aria-label="With textarea" th:field="*{itemDetail}"></textarea>
         </div>
         <p th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}" class="fieldError">Incorrect data</p>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">로스터리</span>
+            </div>
+            <input type="text" th:field="*{roasteryNm}" class="form-control" placeholder="로스터리 이름을 입력해주세요">
+        </div>
+        <p th:if="${#fields.hasErrors('roasteryNm')}" th:errors="*{roasteryNm}" class="fieldError">Incorrect data</p>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">로스터리 소개</span>
+            </div>
+            <textarea class="form-control" aria-label="With textarea" th:field="*{roasteryDetail}"></textarea>
+        </div>
+        <p th:if="${#fields.hasErrors('roasteryDetail')}" th:errors="*{roasteryDetail}" class="fieldError">Incorrect data</p>
 
         <div th:if="${#lists.isEmpty(itemFormDto.itemImgDtoList)}">
             <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">

@@ -125,7 +125,7 @@
 
                             <div class="row align-items-center mb-4">
                                 <div class="col">
-                                    <span class="font-weight-medium">[*원두키워드:구현필요*]</span>
+                                    <span class="font-weight-medium"><p th:text="${item.coffeeBean}"></p></span>
                                 </div><!-- end col -->
 
                                 <div class="col text-right">
@@ -240,11 +240,11 @@
                         </div><!-- end col -->
 
                         <div class="col-12 order-2 order-md-2 pt-40px pt-md-0 pb-40px pb-lg-0">
-                            <h3 class="font-weight-normal text-uppercase mb-3">[*로스터리이름:구현필요*]</h3>
+                            <h3 class="font-weight-normal text-uppercase mb-3" th:text="${item.roasteryNm}"></h3>
 
                             <p class="mb-3">Read on, and go through all the information.</p>
 
-                            <h4 class="font-weight-normal mb-40px">[*로스터리소개:구현필요*]</h4>
+                            <h4 class="font-weight-normal mb-40px" th:text="${item.roasteryDetail}"></h4>
 
                             <img class="w-100 mb-4 borderRound" th:src="${item.itemImgDtoList[3].imgUrl}" alt="" />
 
@@ -255,18 +255,18 @@
                                             <p class="text-uppercase mb-0">잘 맞는 추출방법:</p>
                                         </div><!-- end col -->
                                         <div class="col-7">
-                                            <p class="font-weight-medium text-uppercase mb-0">[*추출방법:구현필요*]</p>
+                                            <p class="font-weight-medium text-uppercase mb-0" th:text="${item.extraction}"></p>
                                         </div><!-- end col -->
                                     </div><!-- end row -->
                                 </li><!-- end list-group-item -->
 
                                 <li class="list-group-item">
-                                    <div class="row mt-3">
+                                    <div class="row">
                                         <div class="col-5">
                                             <p class="text-uppercase mb-0">원산지:</p>
                                         </div><!-- end col -->
                                         <div class="col-7">
-                                            <p class="font-weight-medium text-uppercase mb-0">[*원산지:구현필요*]</p>
+                                            <p class="font-weight-medium text-uppercase mb-0" th:text="${item.origin}"></p>
                                         </div><!-- end col -->
                                     </div><!-- end row -->
                                 </li><!-- end list-group-item -->
@@ -277,7 +277,7 @@
                                             <p class="text-uppercase mb-0">가공방식:</p>
                                         </div><!-- end col -->
                                         <div class="col-7">
-                                            <p class="font-weight-medium text-uppercase mb-0">[*가공방식:구현필요*]</p>
+                                            <p class="font-weight-medium text-uppercase mb-0" th:text="${item.process}"></p>
                                         </div><!-- end col -->
                                     </div><!-- end row -->
                                 </li><!-- end list-group-item -->
@@ -288,7 +288,7 @@
                                             <p class="text-uppercase mb-0">품종:</p>
                                         </div><!-- end col -->
                                         <div class="col-7">
-                                            <p class="font-weight-medium text-uppercase mb-0">[*품종:구현필요*]</p>
+                                            <p class="font-weight-medium text-uppercase mb-0" th:text="${item.kind}"></p>
                                         </div><!-- end col -->
                                     </div><!-- end row -->
                                 </li><!-- end list-group-item -->
@@ -305,7 +305,7 @@
                             <div class="col-12">
                                 <div class="row align-items-center mb-4">
                                     <div class="col">
-                                        <span class="font-weight-medium">[*원두키워드:구현필요*]</span>
+                                        <span class="font-weight-medium" th:text="${item.coffeeBean}"></span>
                                     </div><!-- end col -->
 
                                     <div class="col text-right">

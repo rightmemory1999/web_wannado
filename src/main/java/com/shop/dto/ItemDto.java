@@ -12,11 +12,27 @@ public class ItemDto {
 
     private String itemNm;
 
+    private String coffeeTaste;
+
     private Integer price;
 
     private String itemDetail;
 
     private String sellStatCd;
+
+    private String coffeeBeanCd;
+
+    private String roasteryNm;
+
+    private String roasteryDetail;
+
+    private String extraction;
+
+    private String origin;
+
+    private String process;
+
+    private String kind;
 
     private LocalDateTime regTime;
 

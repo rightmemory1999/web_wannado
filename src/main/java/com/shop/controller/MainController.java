@@ -45,4 +45,17 @@ public class MainController {
         return "item/itemList";
     }
 
+    /*@GetMapping(value = "/search")
+    public String search(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 15);
+        Page<MainItemDto> items = itemService.searchByCoffeePage(itemSearchDto, pageable);
+
+        model.addAttribute("items", items);
+        model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage", 5);
+
+        return "item/itemList";
+    }*/
+
 }

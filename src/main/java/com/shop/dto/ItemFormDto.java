@@ -1,5 +1,6 @@
 package com.shop.dto;
 
+import com.shop.constant.CoffeeBean;
 import com.shop.constant.ItemSellStatus;
 import com.shop.entity.Item;
 import lombok.Getter;
@@ -20,6 +21,9 @@ public class ItemFormDto {
     @NotBlank(message = "상품명은 필수 입력 값입니다.")
     private String itemNm;
 
+    @NotBlank(message = "맛과향은 필수 입력 값입니다.")
+    private String coffeeTaste;
+
     @NotNull(message = "가격은 필수 입력 값입니다.")
     private Integer price;
 
@@ -29,7 +33,27 @@ public class ItemFormDto {
     @NotNull(message = "재고는 필수 입력 값입니다.")
     private Integer stockNumber;
 
+    @NotBlank(message = "로스터리 이름은 필수 입력 값입니다.")
+    private String roasteryNm;
+
+    @NotBlank(message = "로스터리 소개는 필수 입력 값입니다.")
+    private String roasteryDetail;
+
+    @NotBlank(message = "추출방법은 필수 입력 값입니다.")
+    private String extraction;
+
+    @NotBlank(message = "원산지는 필수 입력 값입니다.")
+    private String origin;
+
+    @NotBlank(message = "가공방식은 필수 입력 값입니다.")
+    private String process;
+
+    @NotBlank(message = "품종은 필수 입력 값입니다.")
+    private String kind;
+
     private ItemSellStatus itemSellStatus;
+
+    private CoffeeBean coffeeBean;
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();    // 상품 저장 후 수정할 때 상품 이미지 정보를 저장하는 리스트
 
