@@ -151,6 +151,49 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         return new PageImpl<>(content, pageable, total);
     }
 
+    @Override
+    public Page<MainItemDto> getRecommend(ItemSearchDto itemSearchDto, Pageable pageable) {
+        QItem item = QItem.item;
+        QItemImg itemImg = QItemImg.itemImg;
+
+        List<MainItemDto> content = queryFactory
+                .select(
+                        new QMainItemDto(
+                                item.id,
+                                item.itemNm,
+                                item.roasteryNm,
+                                item.itemDetail,
+                                itemImg.imgUrl,
+                                item.price)
+                )
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.frontImgYn.eq("Y"),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()),
+                        searchExtractionLike(itemSearchDto.getSearchExtraction()),
+                        searchOriginLike(itemSearchDto.getSearchOrigin()))
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory
+                .select(Wildcard.count)
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.frontImgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()),
+                        searchExtractionLike(itemSearchDto.getSearchExtraction()),
+                        searchOriginLike(itemSearchDto.getSearchOrigin()))
+                .fetchOne()
+                ;
+
+        return new PageImpl<>(content, pageable, total);
+    }
+
     /*@Override
     public Page<MainItemDto> searchByCoffeePropPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         QItem item = QItem.item;

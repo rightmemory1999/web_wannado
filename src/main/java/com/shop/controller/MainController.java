@@ -35,7 +35,7 @@ public class MainController {
     @GetMapping(value = "/shop")
     public String shop(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
 
-        Pageable pageable = PageRequest.of(page.orElse(0), 15);
+        Pageable pageable = PageRequest.of(page.orElse(0), 9);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
 
         model.addAttribute("items", items);
@@ -52,7 +52,14 @@ public class MainController {
     }
 
     @GetMapping(value = "/quiz")
-    public String quiz(){
+    public String quiz(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Page<MainItemDto> items = itemService.getRecommend(itemSearchDto, pageable);
+
+        model.addAttribute("items", items);
+        model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage", 1);
 
         return "item/quiz";
     }
