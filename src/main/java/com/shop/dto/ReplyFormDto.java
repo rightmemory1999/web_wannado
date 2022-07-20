@@ -26,8 +26,6 @@ public class ReplyFormDto {
     @Max(value = 5, message = "최대 별점은 5점 입니다.")
     private Long star;
 
-    @NotBlank(message = "후기 내용을 입력 해주세요.")
-    @Length(min = 10, message = "후기는 10글자 이상 작성 해주세요.")
     private String replyContent;
 
     private static ModelMapper modelMapper = new ModelMapper();

@@ -5,18 +5,14 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-
   <script th:inline="javascript">
     $(document).ready(function(){
       var errorMessage = [[${errorMessage}]];
       if(errorMessage != null){
         alert(errorMessage);
       }
-
     });
-
   </script>
-
 </th:block>
 
 <!-- 사용자 CSS 추가 -->
@@ -35,11 +31,12 @@
 </th:block>
 
 <div th:fragment="replyForm">
+
   <div style="padding: 1rem">
     <form role="form" method="post" th:object="${replyFormDto}">
 
       <p class="h2">
-        리뷰등록.
+        테이스팅 노트 작성.
       </p>
 
       <input type="hidden" th:field="*{id}">
@@ -57,20 +54,20 @@
           <span class="input-group-text">별점</span>
         </div>
         <select th:field="*{star}" class="custom-select">
-          <option value="1">⭐️</option>
-          <option value="2">⭐️⭐️</option>
-          <option value="3">⭐️⭐️⭐️</option>
-          <option value="4">⭐️⭐️⭐️⭐️</option>
           <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+          <option value="4">⭐️⭐️⭐️⭐️</option>
+          <option value="3">⭐️⭐️⭐️</option>
+          <option value="2">⭐️⭐️</option>
+          <option value="1">⭐️</option>
         </select>
       </div>
       <p th:if="${#fields.hasErrors('star')}" th:errors="*{star}" class="fieldError">Incorrect data</p>
 
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text">리뷰</span>
+          <span class="input-group-text">노트</span>
         </div>
-        <textarea type="text" th:field="*{replyContent}" class="form-control" placeholder="후기 내용을 입력해주세요"></textarea>
+        <textarea type="text" th:field="*{replyContent}" class="form-control" placeholder="커피의 맛과 향은 어땠나요?"></textarea>
       </div>
       <p th:if="${#fields.hasErrors('replyContent')}" th:errors="*{replyContent}" class="fieldError">Incorrect data</p>
 

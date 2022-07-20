@@ -42,11 +42,12 @@
 
         <form th:action="@{'/item/' + ${itemId} + '/replyList/' + ${replyPage.number}}" role="form" method="get" th:object="${replyPage}">
 
-            <div th:each="reply, status: ${replyPage.getContent()}">
+<!--            <div th:each="reply, status: ${replyPage.getContent()}">-->
                 <p class="h2">
-                    테이스팅 노트 (<span th:text="${reply.item.itemNm}" />)
+                    테이스팅 노트.
+<!--                    (<span th:text="${replyPage.getContent()}" />)-->
                 </p>
-            </div>
+<!--            </div>-->
             <input type="hidden" th:value="${itemId}" id="itemId">
 
             <table class="table">
