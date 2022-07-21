@@ -56,46 +56,25 @@
 
     <nav class="navbar sticky-filter navbar-expand navbar-light bg-light navbar-filter menu-border border-bottom overflow-auto px-0">
         <ul class="navbar-nav mr-auto ml-auto flex-nowrap">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="my-profile.html">
-                    My Profile
-                </a>
-            </li><!-- end nav-item -->
 
             <li class="nav-item active text-nowrap">
                 <a class="nav-link text-primary" th:href="@{/orders}">
-                    My Orders
+                    주문내역
                 </a>
             </li><!-- end nav-item -->
 
             <li class="nav-item text-nowrap">
                 <a class="nav-link" th:href="@{/cart}">
-                    My Cart
+                    장바구니
                 </a>
             </li><!-- end nav-item -->
 
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="wishlist.html">
-                    Wishlist
-                </a>
-            </li><!-- end nav-item -->
-
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="account.html">
-                    Account
-                </a>
-            </li><!-- end nav-item -->
         </ul><!-- end navbar-nav -->
     </nav><!-- end navbar -->
 
     <!-- start section -->
     <section class="pt-6 pb-7 bg-white">
         <div class="container-lg container-fluid">
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-11 col-md-10 col-lg-6">
-                    <h2 class="font-weight-bold">My Orders</h2>
-                </div><!-- end col -->
-            </div><!-- end row -->
 
             <div class="row">
                 <div class="col-12">
@@ -159,7 +138,7 @@
                                     <div class="row pt-4 pb-4">
                                         <div class="col-sm-12 pl-4 pr-4 text-right">
                                             <th:block th:if="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
-                                                <button type="button" class="btn btn-outline-secondary" th:value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button>
+                                                <button type="button" class="btn btn-outline-secondary borderRound" th:value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button>
                                             </th:block>
                                             <th:block th:unless="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
                                                 <h4>(취소 완료)</h4>
@@ -182,17 +161,17 @@
         <ul class="pagination justify-content-center">
 
             <li class="page-item" th:classappend="${orders.number eq 0}?'disabled':''">
-                <a th:href="@{'/orders/' + ${orders.number-1}}" aria-label='Previous' class="page-link">
+                <a th:href="@{'/orders/' + ${orders.number-1}}" aria-label='Previous' class="page-link borderRound">
                     <span aria-hidden='true'>Previous</span>
                 </a>
             </li>
 
             <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${orders.number eq page-1}?'active':''">
-                <a th:href="@{'/orders/' + ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
+                <a th:href="@{'/orders/' + ${page-1}}" th:inline="text" class="page-link borderRound">[[${page}]]</a>
             </li>
 
             <li class="page-item" th:classappend="${orders.number+1 ge orders.totalPages}?'disabled':''">
-                <a th:href="@{'/orders/' + ${orders.number+1}}" aria-label='Next' class="page-link">
+                <a th:href="@{'/orders/' + ${orders.number+1}}" aria-label='Next' class="page-link borderRound">
                     <span aria-hidden='true'>Next</span>
                 </a>
             </li>

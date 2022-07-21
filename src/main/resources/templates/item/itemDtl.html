@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thyleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout1}">
 
 <head>
@@ -353,10 +354,10 @@
                                     </div><!-- end col -->
                                 </div><!-- end row -->
 
-                                <div>
+                                <div sec:authorize="isAuthenticated()">
                                     <a th:href="@{'/item/' + ${itemId} + '/reply/new'}" rel="modal:open">테이스팅 노트 작성</a>
                                 </div>
-                                <div>
+                                <div sec:authorize="isAuthenticated()">
                                     <a th:href="@{'/item/' + ${itemId} + '/replyList/0?searchReplyBy=itemId&searchReplyQuery=' + ${itemId}}" rel="modal:open">테이스팅 노트 조회</a>
                                 </div>
 
