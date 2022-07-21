@@ -57,6 +57,16 @@
                     </a>
                 </li><!-- end nav-item -->
 
+
+                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                    <a class="nav-link" href="/admin/members">
+                        회원관리
+                    </a>
+                </li><!-- end nav-item -->
+
+
+
+
                 <li class="nav-item nav-search d-block d-lg-none">
                     <form class="">
                         <div class="input-group mb-2">

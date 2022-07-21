@@ -1,9 +1,13 @@
 package com.shop.service;
 
+import com.shop.dto.MainMemberDto;
 import com.shop.dto.MemberFormDto;
+import com.shop.dto.MemberSearchDto;
 import com.shop.entity.Member;
 import com.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -47,6 +51,23 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString())
                 .build();
     }
+
+
+    @Transactional(readOnly = true)
+    public Page<Member> getAdminMemberPage(MemberSearchDto memberSearchDto, Pageable pageable) {
+        return memberRepository.getAdminMemberPage(memberSearchDto, pageable);
+
+    }
+
+
+
+    public Page<MainMemberDto> getMainMemberPage(MemberSearchDto memberSearchDto, Pageable pageable) {
+        return memberRepository.getMainMemberPage(memberSearchDto, pageable);
+    }
+
+
+
+
 
     @Transactional
     public void updateMember(MemberFormDto memberFormDto){
