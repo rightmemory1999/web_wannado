@@ -25,22 +25,23 @@
                             <div class="row justify-content-center justify-content-lg-start">
                                 <div class="col-12 col-sm-10 col-lg-9 col-xl-8 py-40px py-md-8">
                                     <h1 class="font-size-md-display4 font-weight-medium mb-40px mb-md-5">
-                                        Welcome to <br />
-                                        <strong>Wanna Do.</strong>
+                                        Good Bye
                                     </h1>
 
                                     <form role="form" method="post" id="deleteForm" action="/members/check">
 
                                         <div class="form-group mb-20 mb-md-25px">
                                             <label th:for="password">Password</label>
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="********">
+                                            <input type="password" class="form-control borderRound" name="password" id="password" placeholder="비밀번호를 입력해주세요.">
                                         </div><!-- end form-group -->
                                         <p th:if="${message}" class="error" th:text="${message}"></p>
 
                                         <div class="form-group mb-25px">
-                                            <button class="btn btn-minimalis-dark btn-arrow btn-block" type="button" id="deleteCheck">
+
+                                            <button class="btn btn-minimalis-dark btn-arrow btn-block borderRound" type="button" id="deleteCheck">
+
                                                     <span class="inner-btn">
-                                                        Delete
+                                                        탈퇴하기
                                                         <span class="arrow">
                                                             <span class="arrow-icon"></span>
                                                         </span>

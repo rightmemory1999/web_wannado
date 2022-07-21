@@ -3,6 +3,7 @@ package com.shop.repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.shop.constant.CoffeeBean;
 import com.shop.constant.ItemSellStatus;
 import com.shop.dto.ItemSearchDto;
 import com.shop.dto.MainItemDto;
@@ -29,6 +30,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
     private BooleanExpression searchSellStatusEq(ItemSellStatus searchSellStatus){
         return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
+    }
+
+    private BooleanExpression searchCoffeeBeanEq(CoffeeBean searchCoffeeBean){
+        return searchCoffeeBean == null ? null : QItem.item.coffeeBean.eq(searchCoffeeBean);
     }
 
     private BooleanExpression regDtsAfter(String searchDateType){
@@ -61,6 +66,18 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         return null;
     }
 
+    private BooleanExpression searchTasteLike(String searchTaste){
+        return StringUtils.isEmpty(searchTaste) ? null : QItem.item.coffeeTaste.like("%" + searchTaste + "%");
+    }
+
+    private BooleanExpression searchExtractionLike(String searchExtraction){
+        return StringUtils.isEmpty(searchExtraction) ? null : QItem.item.extraction.like("%" + searchExtraction + "%");
+    }
+
+    private BooleanExpression searchOriginLike(String searchOrigin){
+        return StringUtils.isEmpty(searchOrigin) ? null : QItem.item.origin.like("%" + searchOrigin + "%");
+    }
+
     @Override
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
 
@@ -68,6 +85,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .selectFrom(QItem.item)
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
                         searchByLike(itemSearchDto.getSearchBy(),
                                 itemSearchDto.getSearchQuery()))
                 .orderBy(QItem.item.id.desc())
@@ -78,6 +96,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
         long total = queryFactory.select(Wildcard.count).from(QItem.item)
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
                         searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
                 .fetchOne();
 
@@ -98,14 +117,19 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         new QMainItemDto(
                                 item.id,
                                 item.itemNm,
+                                item.roasteryNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,
                                 item.price)
                 )
                 .from(itemImg)
                 .join(itemImg.item, item)
-                .where(itemImg.frontImgYn.eq("Y"))
-                .where(itemNmLike(itemSearchDto.getSearchQuery()))
+                .where(itemImg.frontImgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()),
+                        searchExtractionLike(itemSearchDto.getSearchExtraction()),
+                        searchOriginLike(itemSearchDto.getSearchOrigin()))
                 .orderBy(item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -115,12 +139,99 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .select(Wildcard.count)
                 .from(itemImg)
                 .join(itemImg.item, item)
-                .where(itemImg.frontImgYn.eq("Y"))
-                .where(itemNmLike(itemSearchDto.getSearchQuery()))
+                .where(itemImg.frontImgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()),
+                        searchExtractionLike(itemSearchDto.getSearchExtraction()),
+                        searchOriginLike(itemSearchDto.getSearchOrigin()))
                 .fetchOne()
                 ;
 
         return new PageImpl<>(content, pageable, total);
     }
+
+    @Override
+    public Page<MainItemDto> getRecommend(ItemSearchDto itemSearchDto, Pageable pageable) {
+        QItem item = QItem.item;
+        QItemImg itemImg = QItemImg.itemImg;
+
+        List<MainItemDto> content = queryFactory
+                .select(
+                        new QMainItemDto(
+                                item.id,
+                                item.itemNm,
+                                item.roasteryNm,
+                                item.itemDetail,
+                                itemImg.imgUrl,
+                                item.price)
+                )
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.frontImgYn.eq("Y"),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()),
+                        searchExtractionLike(itemSearchDto.getSearchExtraction()),
+                        searchOriginLike(itemSearchDto.getSearchOrigin()))
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory
+                .select(Wildcard.count)
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.frontImgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()),
+                        searchExtractionLike(itemSearchDto.getSearchExtraction()),
+                        searchOriginLike(itemSearchDto.getSearchOrigin()))
+                .fetchOne()
+                ;
+
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    /*@Override
+    public Page<MainItemDto> searchByCoffeePropPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        QItem item = QItem.item;
+        QItemImg itemImg = QItemImg.itemImg;
+
+        List<MainItemDto> content = queryFactory
+                .select(
+                        new QMainItemDto(
+                                item.id,
+                                item.itemNm,
+                                item.roasteryNm,
+                                item.itemDetail,
+                                itemImg.imgUrl,
+                                item.price)
+                )
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.frontImgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()))
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory
+                .select(Wildcard.count)
+                .from(itemImg)
+                .join(itemImg.item, item)
+                .where(itemImg.frontImgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        searchCoffeeBeanEq(itemSearchDto.getSearchCoffeeBean()),
+                        searchTasteLike(itemSearchDto.getSearchTaste()))
+                .fetchOne()
+                ;
+
+        return new PageImpl<>(content, pageable, total);
+    }*/
 
 }

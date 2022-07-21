@@ -1,5 +1,6 @@
 package com.shop.entity;
 
+import com.shop.constant.CoffeeBean;
 import com.shop.constant.ItemSellStatus;
 import com.shop.dto.ItemFormDto;
 import com.shop.exception.OutOfStockException;
@@ -24,6 +25,9 @@ public class Item extends BaseEntity {
     @Column(nullable = false)
     private String itemNm;  // 상품명
 
+    @Column(nullable = false)
+    private String coffeeTaste;  // 맛과향
+
     @Column(name="price", nullable = false)
     private int price;  // 가격
 
@@ -37,12 +41,43 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus;  // 상품 판매 상태
 
+    @Enumerated(EnumType.STRING)
+    private CoffeeBean coffeeBean;  // 원두, ex. 싱글 오리진, 블렌드..
+
+    @Column(nullable = false)
+    private String roasteryNm;  // 로스터리 이름
+
+    @Lob
+    @Column(nullable = false)
+    private String roasteryDetail;  // 로스터리 소개
+
+    @Column(nullable = false)
+    private String extraction;  // 추출 방법
+
+    @Column(nullable = false)
+    private String origin;  // 원산지
+
+    @Column(nullable = false)
+    private String process;  // 가공 방식
+
+    @Column(nullable = false)
+    private String kind;  // 품종
+
+
     public void updateItem(ItemFormDto itemFormDto) {
         this.itemNm = itemFormDto.getItemNm();
+        this.coffeeTaste = itemFormDto.getCoffeeTaste();
         this.price = itemFormDto.getPrice();
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
+        this.coffeeBean = itemFormDto.getCoffeeBean();
+        this.roasteryNm = itemFormDto.getRoasteryNm();
+        this.roasteryDetail = itemFormDto.getRoasteryDetail();
+        this.extraction = itemFormDto.getExtraction();
+        this.origin = itemFormDto.getOrigin();
+        this.process = itemFormDto.getProcess();
+        this.kind = itemFormDto.getKind();
     }
 
     /**

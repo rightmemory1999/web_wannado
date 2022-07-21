@@ -100,19 +100,19 @@
 
                                         <div class="form-group mb-20px">
                                             <label th:for="name">Name*</label>
-                                            <input type="text" class="form-control" th:field="*{name}" placeholder="이름을 입력해주세요">
+                                            <input type="text" class="form-control borderRound" th:field="*{name}" placeholder="이름을 입력해주세요">
                                             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
                                         </div><!-- end form-group -->
 
                                         <div class="form-group mb-20px">
                                             <label th:for="email">Email address*</label>
-                                            <input type="email" class="form-control" th:field="*{email}" placeholder="email@example.com">
+                                            <input type="email" class="form-control borderRound" th:field="*{email}" placeholder="email@example.com">
                                             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect data</p>
                                         </div><!-- end form-group -->
 
                                         <div class="form-group mb-20px">
                                             <label th:for="password">Password*</label>
-                                            <input type="password" class="form-control" th:field="*{password}" placeholder="********">
+                                            <input type="password" class="form-control borderRound" th:field="*{password}" placeholder="********">
                                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
                                         </div><!-- end form-group -->
 
@@ -120,18 +120,18 @@
                                             <div class="col"></div>
                                             <label th:for="address">Address</label>
                                             <input type="hidden" class="form-control" id="postcode" placeholder="우편번호">
-                                            <input type="button" onclick="execution_daum_address()" value="우편번호 찾기"><br>
-                                            <input type="text" class="form-control" id="address" th:field="*{address}" placeholder="주소" readonly="readonly"><br>
-                                            <input type="text" class="form-control" id="detailAddress" th:field="*{detailAddress}" placeholder="상세주소">
-                                            <input type="text" class="form-control" id="extraAddress" th:field="*{extraAddress}" placeholder="참고항목" readonly="readonly">
+                                            <input type="button" class="borderRound" onclick="execution_daum_address()" value="우편번호 찾기"><br>
+                                            <input type="text" class="form-control borderRound" id="address" th:field="*{address}" placeholder="주소" readonly="readonly"><br>
+                                            <input type="text" class="form-control borderRound" id="detailAddress" th:field="*{detailAddress}" placeholder="상세주소">
+                                            <input type="text" class="form-control borderRound" id="extraAddress" th:field="*{extraAddress}" placeholder="참고항목" readonly="readonly">
                                             <!--                                            <input type="text" class="form-control" th:field="*{address}" placeholder="주소를 입력해주세요" readonly="readonly">-->
                                             <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError">Incorrect data</p>
                                         </div><!-- end form-group -->
 
                                         <div class="form-group mb-25px mb-md-4">
-                                            <button type="submit" class="btn btn-minimalis-dark btn-arrow btn-block">
+                                            <button type="submit" class="btn btn-minimalis-dark btn-arrow btn-block borderRound">
                                                     <span class="inner-btn">
-                                                        Register
+                                                        회원가입
                                                         <span class="arrow">
                                                             <span class="arrow-icon"></span>
                                                         </span>

@@ -12,6 +12,8 @@ public class MainItemDto {
 
     private String itemNm;
 
+    private String roasteryNm;
+
     private String itemDetail;
 
     private String imgUrl;
@@ -19,9 +21,10 @@ public class MainItemDto {
     private Integer price;
 
     @QueryProjection
-    public MainItemDto(Long id, String itemNm, String itemDetail, String imgUrl, Integer price) {
+    public MainItemDto(Long id, String itemNm, String roasteryNm, String itemDetail, String imgUrl, Integer price) {
         this.id = id;
         this.itemNm = itemNm;
+        this.roasteryNm = roasteryNm;
         this.itemDetail = itemDetail;
         this.imgUrl = imgUrl;
         this.price = price;

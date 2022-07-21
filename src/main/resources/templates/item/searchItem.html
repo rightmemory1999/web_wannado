@@ -10,55 +10,27 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
-
-<!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script th:inline="javascript">
 
-        function addCart(itemId){
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-
-            var url = "/cart";
-            var paramData = {
-                itemId : itemId,
-                count : $("#count").val()
-            };
-
-            var param = JSON.stringify(paramData);
-
-            $.ajax({
-                url      : url,
-                type     : "POST",
-                contentType : "application/json",
-                data     : param,
-                beforeSend : function(xhr){
-                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
-                    xhr.setRequestHeader(header, token);
-                },
-                dataType : "json",
-                cache   : false,
-                success  : function(result, status){
-                    var result = confirm("상품을 장바구니에 담았습니다. 장바구니로 이동할까요?");
-                    if (result) {
-                        location.href = '/cart';
-                    } else {
-                        location.href = '/shop';
-                    }
-
-                },
-                error : function(jqXHR, status, error){
-
-                    if(jqXHR.status == '401'){
-                        alert('로그인 후 이용해주세요');
-                        location.href='/members/login';
-                    } else{
-                        alert(jqXHR.responseText);
-                    }
-
+        $(document).ready(function() {
+            $('input[type=checkbox][name=coffeeBean]').change(function(){
+                if ($(this).is(':checked')) {
+                    alert(`${this.value} is checked`);
                 }
-            });
-        }
+                else {
+                    alert(`${this.value} is unchecked`);
+                }
+            })
+        })
+
+        function check(box){
+
+            if(box.checked == true)
+                location.href="/search/" + "?searchCoffeeBean=" + box.value;
+            else
+                location.href="/search/";
+
 
         $(document).ready(function(){
             $("#searchBtn").on("click",function(e) {
@@ -68,23 +40,19 @@
         });
 
         function page(page){
-            var searchCoffeeBean = $("#searchCoffeeBean").val();
-            var searchTaste = $("#searchTaste").val();
-            var searchExtraction = $("#searchExtraction").val();
-            var searchOrigin = $("#searchOrigin").val();
+            var searchCoffeeBean = ${"#searchCoffeeBean"}.val();
+            var searchTaste = ${"#searchTaste"}.val();
 
-            location.href="/shop/" + page + "?searchCoffeeBean=" + searchCoffeeBean
-                + "&searchTaste=" + searchTaste
-                + "&searchExtraction=" + searchExtraction
-                + "&searchOrigin=" + searchOrigin;
+            location.href="/search/" + "?searchCoffeeBean=" + searchCoffeeBean
+                + "&searchTaste=" + searchTaste;
         }
+
 
     </script>
 </th:block>
 
 <div layout:fragment="content">
-    <form th:action="@{'/shop/' + ${items.number}}" role="form" method="get" th:object="${items}">
-
+    <form th:action="@{'/search/'}" role="form" method="get" th:object="${items}">
     <!-- 상단 제목 시작 -->
     <section class="pt-4 pb-4 pt-lg-4 pb-lg-2">
         <div class="container-lg container-fluid">
@@ -101,101 +69,78 @@
     <!-- 상단 제목 끝 -->
 
     <!-- start product section -->
-    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
-    <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}" class="center">
-        <p class="h3 font-weight-bold" th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>
-    </div>
 
     <section class="pt-1 pb-4 pb-md-5 pt-lg-3 pb-lg-7 bg-white">
         <div class="container-lg container-fluid">
             <div class="row">
 
                 <!-- start sidebar -->
-                <div class="col-12 col-lg-3 d-none d-lg-block" th:object="${itemSearchDto}">
+                <div class="form-inline justify-content-center" th:object="${itemSearchDto}">
 
-                    <div class="widgets mb-5">
-                        <h3 class="font-weight-bolder text-primary mb-0 mb-lg-3">내가 원하는 원두</h3>
+                    <div class="widgets mb-3" th:field="*{searchCoffeeBean}" >
+                        <h4 class="font-weight-bolder mb-4">원두 찾기</h4>
+
+                        <div class="form-group mb-3">
+                            <div class="custom-control custom-checkbox" >
+                                <input type="checkbox" class="custom-control-input" id="DECAFFEIN" value="DECAFFEIN" name="coffeeBean">
+                                <label class="custom-control-label" for="DECAFFEIN" >디카페인</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="custom-control custom-checkbox" >
+                                <input type="checkbox" class="custom-control-input rounded-0" id="SINGLE_ORIGIN" name="coffeeBean">
+                                <label class="custom-control-label" for="SINGLE_ORIGIN">싱글 오리진</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="custom-control custom-checkbox" >
+                                <input type="checkbox" class="custom-control-input rounded-0" id="BLEND" name="BLEND">
+                                <label class="custom-control-label" for="BLEND">블렌드</label>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!--원두-->
-                    <div class="widgets mb-3">
-                        <h4 class="font-weight-bolder mb-4">원두</h4>
 
-                        <div class="form-group mb-3">
-                            <select th:field="*{searchCoffeeBean}" class="form-control borderRound" style="width:auto;">
-                                <option value="">전체</option>
-                                <option value="DECAFFEIN">디카페인</option>
-                                <option value="SINGLE_ORIGIN">싱글오리진</option>
-                                <option value="BLEND">블렌드</option>
-                            </select>
-                        </div>
-                    </div><!-- end widgets -->
+                    <div class="widgets mb-3">
+                        <h4 class="font-weight-bolder mb-4">원두 선택</h4>
+                        <select th:field="*{searchCoffeeBean}" class="form-control" style="width:auto;">
+                            <option value="">전체</option>
+                            <option value="DECAFFEIN">디카페인</option>
+                            <option value="SINGLE_ORIGIN">싱글오리진</option>
+                            <option value="BLEND">블렌드</option>
+                        </select>
+                    </div>
 
                     <hr class="my-4" />
 
-                    <!-- 맛과 향 -->
                     <div class="widgets mb-3">
-                        <h4 class="font-weight-bolder mb-4">맛과 향</h4>
-
-                        <div class="form-group mb-3">
-                            <select th:field="*{searchTaste}" class="form-control borderRound" style="width:auto;">
-                                <option value="">전체</option>
-                                <option value="달콤">달콤</option>
-                                <option value="고소">고소</option>
-                                <option value="쌉쌀">쌉쌀</option>
-                                <option value="밸런스">밸런스</option>
-                                <option value="깔끔한">깔끔한</option>
-                                <option value="부드러운">부드러운</option>
-                            </select>
-                        </div>
-                    </div><!-- end widgets -->
+                        <h4 class="font-weight-bolder mb-4">맛/향 선택</h4>
+                        <select th:field="*{searchTaste}" class="form-control" style="width:auto;">
+                            <option value="">전체</option>
+                            <option value="달콤">달콤</option>
+                            <option value="쌉쌀">쌉쌀</option>>
+                            <option value="밸런스">밸런스</option>
+                            <option value="깔끔한">깔끔한</option>
+                        </select>
+                    </div>
 
                     <hr class="my-4" />
 
-                    <!-- 추출방식 -->
-                    <div class="widgets mb-3">
-                        <h4 class="font-weight-bolder mb-4">추출 방식</h4>
-
-                        <div class="form-group mb-3">
-                            <select th:field="*{searchExtraction}" class="form-control borderRound" style="width:auto;">
-                                <option value="">전체</option>
-                                <option value="핸드드립">핸드드립</option>
-                                <option value="에스프레소머신">에스프레소머신</option>
-                                <option value="커피메이커">커피메이커</option>
-                            </select>
-                        </div>
-                    </div><!-- end widgets -->
-
+                    <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
                     <hr class="my-4" />
-
-                    <!-- 원산지 -->
-                    <div class="widgets mb-3">
-                        <h4 class="font-weight-bolder mb-4">원산지</h4>
-
-                        <div class="form-group mb-3">
-                            <select th:field="*{searchOrigin}" class="form-control borderRound" style="width:auto;">
-                                <option value="">전체</option>
-                                <option value="콜롬비아">콜롬비아</option>
-                                <option value="에티오피아">에티오피아</option>
-                                <option value="과테말라">과테말라</option>
-                                <option value="브라질">브라질</option>
-                                <option value="페루">페루</option>
-                                <option value="파나마">파나마</option>
-                            </select>
-                        </div>
-                    </div><!-- end widgets -->
-
-                    <hr class="my-4" />
-
-                    <button id="searchBtn" type="submit" class="btn btn-primary borderRound">검색</button>
                 </div><!-- end col -->
+
+
 
                 <!-- start content -->
                 <div class="col-12 col-lg-9">
                     <div class="row">
                         <!-- th block 시작 -->
-
-                            <div th:each="item, status: ${items.getContent()}" class="col-12 col-sm-6 col-md-4 col-lg-6 col-xl-4">
+                        <th:block th:each="item, status: ${items.getContent()}">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-6 col-xl-4">
                                 <div class="card product-card-style border-0 bg-gray-200 borderRound">
                                     <div class="card-img overflow-hidden">
                                         <!-- Image -->
@@ -211,9 +156,9 @@
                                             </span>
                                         </button>
 
-<!--                                        <span class="card-action action-top action-left">-->
-<!--                                            <span class="badge badge-primary rounded-lg font-weight-bold text-uppercase px-3 py-2">[*NEW*]</span>-->
-<!--                                        </span>-->
+                                        <span class="card-action action-top action-left">
+                                            <span class="badge badge-primary rounded-lg font-weight-bold text-uppercase px-3 py-2">[*NEW*]</span>
+                                        </span>
                                         <!--                                    <span class="card-action action-top action-left">-->
                                         <!--                                            <span class="badge badge-danger rounded-0 font-weight-bold text-uppercase px-3 py-2">-30%</span>-->
                                         <!--                                        </span>-->
@@ -224,16 +169,15 @@
 
                                     <div class="card-body">
                                         <div class="block-content text-center">
-                                            <h6 class="font-weight-normal text-uppercase mb-3">[[${item.roasteryNm}]]</h6>
+                                            <h6 class="font-weight-normal text-uppercase mb-3">[*로스터리이름:구현필요*]</h6>
                                             <h5 class="font-weight-bolder text-uppercase mb-3"><a class="text-dark" th:href="'/item/' +${item.id}">[[${item.itemNm}]]</a></h5>
                                             <p class="font-weight-normal">[[${item.price}]]원</p>
 
                                             <div class="d-flex mt-4">
                                                 <div class="flex-grow-1 pl-1">
-                                                    <input type="hidden" id="count" value="1">
-                                                    <button class="btn btn-outline-dark btn-block font-weight-bolder borderRound" th:value="${item.id}" onclick="addCart(this.value)">
+                                                    <a href="#" class="btn btn-outline-dark btn-block font-weight-bolder borderRound">
                                                         Add to cart
-                                                    </button>
+                                                    </a>
                                                 </div><!-- end col -->
                                                 <div class="pl-2 pr-1">
                                                     <a href="#" class="btn btn-outline-dark font-weight-bolder borderRound" style="min-width: 40px;" data-toggle="modal" data-target="#quickViewModal">
@@ -245,7 +189,7 @@
                                     </div><!-- end card-body -->
                                 </div><!-- end card -->
                             </div><!-- end col -->
-
+                        </th:block>
                         <!-- th block 끝 -->
                     </div><!-- end row -->
 

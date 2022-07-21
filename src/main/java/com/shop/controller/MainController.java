@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
@@ -32,10 +33,10 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping(value = "/shop")
-    public String shop(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+    @GetMapping(value = {"/shop", "/shop/{page}" })
+    public String shop(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
 
-        Pageable pageable = PageRequest.of(page.orElse(0), 15);
+        Pageable pageable = PageRequest.of(page.orElse(0), 9);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
 
         model.addAttribute("items", items);
@@ -44,5 +45,37 @@ public class MainController {
 
         return "item/itemList";
     }
+
+    @GetMapping(value = "/quiz2")
+    public String quiz2(){
+
+        return "item/quiz2";
+    }
+
+    @GetMapping(value = "/quiz")
+    public String quiz(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Page<MainItemDto> items = itemService.getRecommend(itemSearchDto, pageable);
+
+        model.addAttribute("items", items);
+        model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage", 1);
+
+        return "item/quiz";
+    }
+
+    /*@GetMapping(value = "/search")
+    public String search(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 15);
+        Page<MainItemDto> items = itemService.searchByCoffeePage(itemSearchDto, pageable);
+
+        model.addAttribute("items", items);
+        model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage", 5);
+
+        return "item/itemList";
+    }*/
 
 }

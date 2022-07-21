@@ -34,6 +34,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isDeleted = createBoolean("isDeleted");
+
     //inherited
     public final StringPath modifiedBy = _super.modifiedBy;
 
