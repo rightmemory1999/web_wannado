@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
@@ -32,8 +33,8 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping(value = "/shop")
-    public String shop(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+    @GetMapping(value = {"/shop", "/shop/{page}" })
+    public String shop(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
 
         Pageable pageable = PageRequest.of(page.orElse(0), 9);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);

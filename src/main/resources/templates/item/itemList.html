@@ -73,7 +73,7 @@
             var searchExtraction = $("#searchExtraction").val();
             var searchOrigin = $("#searchOrigin").val();
 
-            location.href="/shop/" + "?searchCoffeeBean=" + searchCoffeeBean
+            location.href="/shop/" + page + "?searchCoffeeBean=" + searchCoffeeBean
                 + "&searchTaste=" + searchTaste
                 + "&searchExtraction=" + searchExtraction
                 + "&searchOrigin=" + searchOrigin;
@@ -83,7 +83,7 @@
 </th:block>
 
 <div layout:fragment="content">
-    <form th:action="@{'/shop/'}" role="form" method="get" th:object="${items}">
+    <form th:action="@{'/shop/' + ${items.number}}" role="form" method="get" th:object="${items}">
 
     <!-- 상단 제목 시작 -->
     <section class="pt-4 pb-4 pt-lg-4 pb-lg-2">
