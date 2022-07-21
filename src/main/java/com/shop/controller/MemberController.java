@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -30,12 +29,11 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+    public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()) {
             return "member/memberForm";
         }
-
         try {
             Member member = Member.createMember(memberFormDto, passwordEncoder);
             memberService.joinMember(member);
@@ -43,6 +41,8 @@ public class MemberController {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
+
+        model.addAttribute("msg","success");
         return "redirect:/members/login";
     }
 
@@ -64,10 +64,10 @@ public class MemberController {
         return "member/memberUpdateForm";
     }
     @PostMapping("/update")
-    public String updateUser(@Valid MemberFormDto memberFormDto,RedirectAttributes redirectAttributes){
+    public String updateUser(@Valid MemberFormDto memberFormDto,Model model){
         memberService.updateMember(memberFormDto);
-        redirectAttributes.addAttribute("memberFormDto",memberFormDto.getEmail());
-        return "redirect:/";
+        model.addAttribute("msgU","updateCom");
+        return "member/memberUpdateForm";
     }
 
     @GetMapping("/delete")
@@ -75,17 +75,21 @@ public class MemberController {
         return "member/memberDeleteForm";
     }
     @PostMapping("/delete")
-    public String deleteUser(Authentication authentication, HttpSession session, MemberFormDto memberFormDto, Model model){
+    @ResponseBody
+    public int deleteUser(Authentication authentication,MemberFormDto memberFormDto){
         Member deleteMem = memberService.getMemberByEmail(authentication.getName());
         String oriPass = deleteMem.getPassword();
         String inputPass = memberFormDto.getPassword();
-        if (passwordEncoder.matches(inputPass,oriPass) == false){
-            model.addAttribute("message","비밀번호를 확인해주세요");
-            return "member/memberDeleteForm";
-        }
-        memberService.deleteMember(deleteMem);
+        boolean b = passwordEncoder.matches(inputPass,oriPass);
+        int result = b ? 1 : 0;
+        return result;
+    }
+
+    @PostMapping("/check")
+    public String checkMember(Authentication authentication, HttpSession session){
+        Member deleteMember = memberService.getMemberByEmail(authentication.getName());
+        memberService.deleteMember(deleteMember);
         session.invalidate();
         return "redirect:/";
     }
-
 }

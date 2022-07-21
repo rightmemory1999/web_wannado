@@ -61,4 +61,3 @@ public class Member extends BaseEntity {
         this.extraAddress=extraAddress;
     }
 }
-
