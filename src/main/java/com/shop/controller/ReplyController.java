@@ -86,7 +86,7 @@ public class ReplyController {
 
     @GetMapping(value = {"/item/{itemId}/replyList", "/item/{itemId}/replyList/{page}"})
     public String replyList(ReplySearchDto replySearchDto,
-                            @PathVariable("itemId")Long itemId,
+                            @PathVariable("itemId") Long itemId,
                             @PathVariable("page") Optional<Integer> page,
                             Model model) {
 

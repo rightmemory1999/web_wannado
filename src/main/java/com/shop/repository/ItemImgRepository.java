@@ -11,6 +11,7 @@ public interface ItemImgRepository extends JpaRepository<ItemImg, Long> {
 
     /**
      * 상품대표이미지를 찾는 쿼리 메서드
+     *
      * @param itemId
      * @param frontImgYn
      * @return

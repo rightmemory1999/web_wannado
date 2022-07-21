@@ -16,6 +16,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     /**
      * 상품이 장바구니에 들어있는지 조회한다.
+     *
      * @param cartId 장바구니번호
      * @param itemId 상품번호
      * @return 장바구니상품
@@ -25,6 +26,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     /**
      * CartDetailDto 리스트를 쿼리로 조회하는 JPQL
      * 성능최적화가 필요한 경우 DTO 생성자를 이용하여 반환 값으로 DTO 객체를 생성할 수 있다.
+     *
      * @param cartId 장바구니번호
      * @return 장바구니리스트
      */

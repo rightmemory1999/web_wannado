@@ -21,7 +21,7 @@ public class MainController {
     private final ItemService itemService;
 
     @GetMapping(value = "/")
-    public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+    public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
 
         Pageable pageable = PageRequest.of(page.orElse(0), 6);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
@@ -33,8 +33,8 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping(value = {"/shop", "/shop/{page}" })
-    public String shop(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
+    @GetMapping(value = {"/shop", "/shop/{page}"})
+    public String shop(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
         Pageable pageable = PageRequest.of(page.orElse(0), 9);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
@@ -47,13 +47,13 @@ public class MainController {
     }
 
     @GetMapping(value = "/quiz2")
-    public String quiz2(){
+    public String quiz2() {
 
         return "item/quiz2";
     }
 
     @GetMapping(value = "/quiz")
-    public String quiz(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+    public String quiz(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
 
         Pageable pageable = PageRequest.of(page.orElse(0), 3);
         Page<MainItemDto> items = itemService.getRecommend(itemSearchDto, pageable);
