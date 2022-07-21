@@ -68,7 +68,6 @@ public class MemberService implements UserDetailsService {
     }
     @Transactional
     public void deleteMember(Member member){
-        member.setPassword("");
         member.setDeleted(true);
     }
 }

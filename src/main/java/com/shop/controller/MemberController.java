@@ -27,7 +27,6 @@ public class MemberController {
         model.addAttribute("memberFormDto", new MemberFormDto());
         return "member/memberForm";
     }
-
     @PostMapping("/new")
     public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
 
@@ -43,7 +42,7 @@ public class MemberController {
         }
 
         model.addAttribute("msg","success");
-        return "redirect:/members/login";
+        return "member/memberForm";
     }
 
     @GetMapping("/login")
