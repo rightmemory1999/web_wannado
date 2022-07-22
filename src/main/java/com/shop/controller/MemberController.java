@@ -45,7 +45,9 @@ public class MemberController {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }
+
         model.addAttribute("msg", "success");
+
         return "member/memberForm";
     }
 

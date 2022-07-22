@@ -50,14 +50,16 @@
                                         </div><!-- end form-group -->
                                         <script type="text/javascript">
 		                $(document).ready(function(){
-
-                        $("#deleteCheck").on("click", function(){
+		                var $password = $("#password");
+                        $("#deleteCheck").click(function(){
+                        console.log($password.val())
                         $.ajax({
                           url : "/members/delete",
                           type : "POST",
 					      dataType : "json",
 					      data : $("#deleteForm").serializeArray(),
 				          success: function(data){
+				          console.log(data);
 						    if(data==0){
 						      alert("패스워드가 틀렸습니다.");
 						      return;
@@ -72,6 +74,11 @@
 		                  }
 		                })
 		                });
+		                $("#password").keydown(function(keyNum){
+		                  if(keyNum.keyCode == 13){
+		                  $("#deleteCheck").click()
+		                  }
+		                  })
 		                })
 	                </script>
 
