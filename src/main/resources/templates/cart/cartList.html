@@ -196,74 +196,52 @@
 
     <nav class="navbar sticky-filter navbar-expand navbar-light bg-light navbar-filter menu-border border-bottom overflow-auto px-0">
         <ul class="navbar-nav mr-auto ml-auto flex-nowrap">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="my-profile.html">
-                    My Profile
-                </a>
-            </li><!-- end nav-item -->
 
             <li class="nav-item text-nowrap">
                 <a class="nav-link" th:href="@{/orders}">
-                    My Orders
+                    주문내역
                 </a>
             </li><!-- end nav-item -->
 
             <li class="nav-item active text-nowrap">
                 <a class="nav-link text-primary" th:href="@{/cart}">
-                    My Cart
+                    장바구니
                 </a>
             </li><!-- end nav-item -->
 
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="wishlist.html">
-                    Wishlist
-                </a>
-            </li><!-- end nav-item -->
-
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="account.html">
-                    Account
-                </a>
-            </li><!-- end nav-item -->
         </ul><!-- end navbar-nav -->
     </nav><!-- end navbar -->
 
-    <section class="pt-6 pb-7 bg-white">
-    <div class="row justify-content-center text-center mb-5">
-        <div class="col-11 col-md-10 col-lg-6">
-            <h2 class="font-weight-bold">장바구니</h2>
-        </div><!-- end col -->
-    </div><!-- end row -->
+    <div style="padding: 0em 10em">
+        <section class="pt-6 pb-7 bg-white">
 
-    <div>
-
-        <table class="table">
-            <colgroup>
-                <col width="15%"/>
-                <col width="70%"/>
-                <col width="15%"/>
-            </colgroup>
-            <thead>
-            <tr class="text-center">
-                <td>
-                    <input type="checkbox" id="checkall" onclick="checkAll()"> 전체선택
-                </td>
-                <td>상품정보</td>
-                <td>상품금액</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cartItem : ${cartItems}">
-                <td class="text-center align-middle">
-                    <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
-                </td>
-                <td class="d-flex">
-                    <div class="repImgDiv align-self-center">
-                        <img th:src="${cartItem.imgUrl}" class = "rounded repImg" th:alt="${cartItem.itemNm}">
-                    </div>
-                    <div class="align-self-center">
-                        <span th:text="${cartItem.itemNm}" class="fs24 font-weight-bold"></span>
-                        <div class="fs18 font-weight-light">
+            <table class="table">
+                <colgroup>
+                    <col width="15%"/>
+                    <col width="70%"/>
+                    <col width="15%"/>
+                </colgroup>
+                <thead>
+                <tr class="text-center">
+                    <td>
+                        <input type="checkbox" id="checkall" onclick="checkAll()"> 전체선택
+                    </td>
+                    <td>상품정보</td>
+                    <td>상품금액</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cartItem : ${cartItems}">
+                    <td class="text-center align-middle">
+                        <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
+                    </td>
+                    <td class="d-flex">
+                        <div class="repImgDiv align-self-center">
+                            <img th:src="${cartItem.imgUrl}" class = "rounded repImg" th:alt="${cartItem.itemNm}">
+                        </div>
+                        <div class="align-self-center">
+                            <span th:text="${cartItem.itemNm}" class="fs24 font-weight-bold"></span>
+                            <div class="fs18 font-weight-light">
                             <span class="input-group mt-2">
                                 <span th:id="'price_' + ${cartItem.cartItemId}"
                                       th:data-price="${cartItem.price}"
@@ -271,40 +249,39 @@
                                 </span>
                                 <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
                                        th:value="${cartItem.count}" min="1"
-                                       onchange="changeCount(this)" class="form-control mr-2" >
+                                       onchange="changeCount(this)" class="form-control borderRound" >
                                 <button type="button" class="close" aria-label="Close">
                                     <span aria-hidden="true" th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">&times;</span>
                                 </button>
                             </span>
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td class="text-center align-middle">
+                    </td>
+                    <td class="text-center align-middle">
                     <span th:id="'totalPrice_' + ${cartItem.cartItemId}"
                           name="totalPrice" th:text="${cartItem.price * cartItem.count} + '원'">
                     </span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-        <div class="row text-right mt-4">
-            <div class="col-12 px-2 mb-4">
-                <div class="card border-0">
-                    <div class="card-body bg-light">
-                        <h5 class="font-weight-normal mb-0">총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span></h5>
-                    </div><!-- end card-body -->
-                </div><!-- end card -->
-            </div><!-- end col -->
+            <div class="row text-right mt-4">
+                <div class="col-12 px-2 mb-4">
+                    <div class="card border-0">
+                        <div class="card-body bg-light borderRound">
+                            <h5 class="font-weight-normal mb-0">총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span></h5>
+                        </div><!-- end card-body -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
 
-            <div class="col-12">
-                <a th:href="@{shop}" class="btn btn-minimalis-outline-dark mb-2">더 둘러보기</a>
-                <a href="#" class="btn btn-minimalis-dark ml-3 mb-2" onclick="orders()">주문하기</a>
-            </div><!-- end col -->
-        </div><!-- end row -->
-
+                <div class="col-12">
+                    <a th:href="@{shop}" class="btn btn-minimalis-outline-dark mb-2 borderRound">더 둘러보기</a>
+                    <a href="#" class="btn btn-minimalis-dark ml-3 mb-2 borderRound" onclick="orders()">주문하기</a>
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </section>
     </div>
-    </section>
 
 
 </div>
