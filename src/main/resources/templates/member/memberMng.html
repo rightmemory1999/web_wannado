@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        $(document).ready(function(){
+            $("#searchBtn").on("click",function(e) {
+                e.preventDefault();
+                page(0);
+            });
+        });
+
+        function page(page){
+<!--            var searchDateType = $("#searchDateType").val();-->
+<!--            var memberName = $("#memberName").val();
+            var memberEmail = $("#memberEmail").val();
+            var memberAddress = $("#memberAddress").val();
+            var searchRole = $("#searchRole").val();-->
+            var searchBy = $("#searchBy").val();
+            var searchQuery = $("#searchQuery").val();
+
+
+
+            location.href="/admin/members/" + page
+<!--                + "?searchDateType=" + searchDateType-->
+<!--                + "&memberName=" + memberName
+                + "&memberEmail=" + memberEmail
+                + "&memberAddress=" + memberAddress
+                + "&searchRole=" + searchRole-->
+                + "&searchBy=" + searchBy
+                + "&searchQuery=" + searchQuery;
+
+        }
+
+    </script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        select{
+            margin-right:10px;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+
+    <div style="padding: 1rem">
+
+        <form th:action="@{'/admin/members/' + ${members.number}}" role="form" method="get" th:object="${members}">
+
+            <p class="h2">
+                회원관리.
+            </p>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>이름</td>
+                    <td>이메일</td>
+                    <td>주소</td>
+                    <td>회원구분 1</td>
+                    <td>회원구분 2</td>
+                    <td>가입시간</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member, status: ${members.getContent()}">
+<!--                    <td>
+                        <a th:href="'/admin/members/'+${member.name}" th:text="${member.name}"></a>
+                    </td>-->
+                    <td th:text="${member.name}"></td>
+                    <td th:text="${member.email}"></td>
+                    <td th:text="${member.address}"></td>
+                    <td th:text="${member.Role}"></td>
+                    <td th:text="${member.createdBy}"></td>
+                    <td th:text="${member.regTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div th:with="start=${(members.number/maxPage)*maxPage + 1}, end=(${(members.totalPages == 0) ? 1 : (start + (maxPage - 1) < members.totalPages ? start + (maxPage - 1) : members.totalPages)})" >
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-member" th:classappend="${members.first}?'disabled'">
+                        <a th:onclick="'javascript:page(' + ${members.number - 1} + ')'" aria-label='Previous' class="page-link">
+                            <span aria-hidden='true'>Previous</span>
+                        </a>
+                    </li>
+
+                    <li class="page-member" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${members.number eq page - 1}?'active':''">
+                        <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                    </li>
+
+                    <li class="page-member" th:classappend="${members.last}?'disabled'">
+                        <a th:onclick="'javascript:page(' + ${members.number + 1} + ')'" aria-label='Next' class="page-link">
+                            <span aria-hidden='true'>Next</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="form-inline justify-content-center" th:object="${memberSearchDto}">
+<!--                    <form class="form-inline" action="/admin/members/" id="searchFrm">-->
+                    <select th:field="*{searchBy}" class="form-control" style="width:auto;">
+<!--                    <select name="field" class="form-control mb-2 mr-sm-2">-->
+                    <option value="name">이름</option>
+<!--                    <option value="email">이메일</option>
+                    <option value="address">주소</option>-->
+                    </select>
+                    <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
+<!--                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="검색어를 입력해주세요" name="word" value="">-->
+                    <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+</html>
