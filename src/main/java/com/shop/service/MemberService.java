@@ -1,9 +1,12 @@
 package com.shop.service;
 
 import com.shop.dto.MemberFormDto;
+import com.shop.dto.MemberSearchDto;
 import com.shop.entity.Member;
 import com.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,7 +40,7 @@ public class MemberService implements UserDetailsService {
 
         if (member == null) {
             throw new UsernameNotFoundException(email);
-        } else if (member.isDeleted()==true){
+        } else if (member.isDeleted()) {
             throw new UsernameNotFoundException(email);
         }
 
@@ -48,10 +51,16 @@ public class MemberService implements UserDetailsService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
+    public Page<Member> getAdminMemberPage(MemberSearchDto memberSearchDto, Pageable pageable) {
+        return memberRepository.getAdminMemberPage(memberSearchDto, pageable);
+
+    }
+
     @Transactional
-    public void updateMember(MemberFormDto memberFormDto){
+    public void updateMember(MemberFormDto memberFormDto) {
         Member member = memberRepository.findByEmail(memberFormDto.getEmail());
-        BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         member.update(
                 memberFormDto.getName(),
                 memberFormDto.getEmail(),
@@ -61,14 +70,15 @@ public class MemberService implements UserDetailsService {
                 memberFormDto.getExtraAddress()
         );
     }
+
     @Transactional
-    public Member getMemberByEmail(String email){
+    public Member getMemberByEmail(String email) {
         Member member = memberRepository.findByEmail(email);
         return member;
     }
+
     @Transactional
     public void deleteMember(Member member){
-        member.setPassword("");
         member.setDeleted(true);
     }
 }

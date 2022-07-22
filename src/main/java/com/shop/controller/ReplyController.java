@@ -34,7 +34,7 @@ public class ReplyController {
     }
 
     @PostMapping(value = "/item/{itemId}/reply/new")
-    public String postReply(@Valid ReplyFormDto replyFormDto, @PathVariable("itemId") Long itemId, BindingResult bindingResult, Model model) {
+    public String postReply(@Valid ReplyFormDto replyFormDto, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.getFieldErrors());
@@ -86,7 +86,7 @@ public class ReplyController {
 
     @GetMapping(value = {"/item/{itemId}/replyList", "/item/{itemId}/replyList/{page}"})
     public String replyList(ReplySearchDto replySearchDto,
-                            @PathVariable("itemId")Long itemId,
+                            @PathVariable("itemId") Long itemId,
                             @PathVariable("page") Optional<Integer> page,
                             Model model) {
 

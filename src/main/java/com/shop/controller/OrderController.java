@@ -37,16 +37,17 @@ public class OrderController {
      * 3. 현재 로그인한 유저의 이메일 정보를 얻는다.
      * 4. 주문정보와 회원이메일로 주문로직을 호출한다.
      * 5. 주문로직으로 생성된 주문번호와 요청성공 Http 응답상태코드를 반환한다.
-     * @param orderDto 입력받은 주문정보
+     *
+     * @param orderDto      입력받은 주문정보
      * @param bindingResult 스프링 데이터검증 객체
-     * @param principal 스프링 시큐리티 사용자정보를 얻기 위한 객체
+     * @param principal     스프링 시큐리티 사용자정보를 얻기 위한 객체
      * @return 주문번호, 요청성공메세지
      */
     @PostMapping(value = "/order")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto
-            , BindingResult bindingResult, Principal principal){
+            , BindingResult bindingResult, Principal principal) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 
@@ -62,7 +63,7 @@ public class OrderController {
 
         try {
             orderId = orderService.order(orderDto, email);
-        } catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
@@ -71,13 +72,14 @@ public class OrderController {
 
     /**
      * 구매이력조회 로직을 호출하는 메서드
+     *
      * @param page
      * @param principal
      * @param model
      * @return 구매이력페이지
      */
     @GetMapping(value = {"/orders", "/orders/{page}"})
-    public String orderHist(@PathVariable("page") Optional<Integer> page, Principal principal, Model model){
+    public String orderHist(@PathVariable("page") Optional<Integer> page, Principal principal, Model model) {
 
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4);
         Page<OrderHistoryDto> ordersHistDtoList = orderService.getOrderList(principal.getName(), pageable);
@@ -93,14 +95,15 @@ public class OrderController {
      * 주문취소 로직을 호출하는 메서드
      * 주문아이디를 받아서 현재 로그인한 회원의 주문인지 확인한다.
      * 맞으면 주문을 취소한다.
+     *
      * @param orderId
      * @param principal
      * @return
      */
     @PostMapping("/order/{orderId}/cancel")
-    public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId , Principal principal){
+    public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal) {
 
-        if(!orderService.validateOrder(orderId, principal.getName())){
+        if (!orderService.validateOrder(orderId, principal.getName())) {
             return new ResponseEntity<String>("주문 취소 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 

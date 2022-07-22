@@ -34,17 +34,18 @@ public class OrderService {
     private final ItemImgRepository itemImgRepository;
 
     /**
-     *  입력 받은 주문정보를 저장하는 메서드
-     *  1. orderDto 에서 전달받은 상품아이디로 주문상품을 조회한다.
-     *  2. email 로 주문자 회원정보를 조회한다.
-     *  3. 조회했던 주문상품과 주문수량으로 주문상품 리스트를 생성한다.
-     *  4. 회원정보와 주문상품 리스트로 주문 엔티티를 생성한다.
-     *  5. 생성한 주문 엔티티를 orderRepository 에 저장한다.
+     * 입력 받은 주문정보를 저장하는 메서드
+     * 1. orderDto 에서 전달받은 상품아이디로 주문상품을 조회한다.
+     * 2. email 로 주문자 회원정보를 조회한다.
+     * 3. 조회했던 주문상품과 주문수량으로 주문상품 리스트를 생성한다.
+     * 4. 회원정보와 주문상품 리스트로 주문 엔티티를 생성한다.
+     * 5. 생성한 주문 엔티티를 orderRepository 에 저장한다.
+     *
      * @param orderDto 입력 받은 주문정보
-     * @param email 주문고객 이메일
+     * @param email    주문고객 이메일
      * @return 주문번호
      */
-    public Long order(OrderDto orderDto, String email){
+    public Long order(OrderDto orderDto, String email) {
 
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
@@ -67,6 +68,7 @@ public class OrderService {
      * 3. 주문리스트를 순회하면서 구매이력페이지에 전달할 DTO 를 생성한다.
      * 4. 주문한 상품의 대표이미지를 조회한다.
      * 5. 페이지구현 객체를 생성하여 반환한다.
+     *
      * @param email
      * @param pageable
      * @return
@@ -96,29 +98,27 @@ public class OrderService {
 
     /**
      * 현재 로그인한 회원과 주문정보를 작성한 회원이 일치하는지 검사하는 메서드
+     *
      * @param orderId
      * @param email
      * @return true or false
      */
     @Transactional(readOnly = true)
-    public boolean validateOrder(Long orderId, String email){
+    public boolean validateOrder(Long orderId, String email) {
         Member curMember = memberRepository.findByEmail(email);
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(EntityNotFoundException::new);
         Member savedMember = order.getMember();
 
-        if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())){
-            return false;
-        }
-
-        return true;
+        return StringUtils.equals(curMember.getEmail(), savedMember.getEmail());
     }
 
     /**
      * 주문을 취소하는 로직
+     *
      * @param orderId
      */
-    public void cancelOrder(Long orderId){
+    public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(EntityNotFoundException::new);
         order.cancelOrder();
@@ -126,11 +126,12 @@ public class OrderService {
 
     /**
      * 장바구니에서 주문할 상품데이터를 전달 받아 주문을 생성하는 로직
+     *
      * @param orderDtoList 주문리스트
-     * @param email 회원이메일
+     * @param email        회원이메일
      * @return 주문번호
      */
-    public Long orders(List<OrderDto> orderDtoList, String email){
+    public Long orders(List<OrderDto> orderDtoList, String email) {
 
         Member member = memberRepository.findByEmail(email);
         List<OrderItem> orderItemList = new ArrayList<>();

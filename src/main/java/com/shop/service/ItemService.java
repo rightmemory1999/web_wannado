@@ -40,9 +40,9 @@ public class ItemService {
             itemImg.setItem(item);
             if (i == 0)
                 itemImg.setFrontImgYn("Y"); // 첫번째 이미지 일 경우 대표 이미지로 설정
-             else
+            else
                 itemImg.setFrontImgYn("N");
-             itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
+            itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
         }
 
         return item.getId();
@@ -87,7 +87,7 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         return itemRepository.getAdminItemPage(itemSearchDto, pageable);
     }
 

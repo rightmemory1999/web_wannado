@@ -1,5 +1,6 @@
 package com.shop.dto;
 
+import com.shop.constant.Role;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -27,4 +28,6 @@ public class MemberFormDto {
 
     private String detailAddress;
     private String extraAddress;
+
+    private Role role;
 }
